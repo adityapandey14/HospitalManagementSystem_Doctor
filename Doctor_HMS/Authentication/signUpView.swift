@@ -7,6 +7,7 @@ struct signUpView: View {
     @State private var password = ""
     @State private var fullName = ""
     @State private var confirmPassword = ""
+    @State private var code = ""
    
     @EnvironmentObject var viewModel : AuthViewModel
     
@@ -98,10 +99,17 @@ struct signUpView: View {
 //                        Text("Confirm Password")
 //                            .font(AppFont.mediumReg)
                         ZStack(alignment : .trailing) {
-                            SecureField("Confirm password", text: $confirmPassword)
-                                .cornerRadius(8)
-                                .underlineTextField()
-                            
+                            VStack{
+                                SecureField("Confirm password", text: $confirmPassword)
+                                    .cornerRadius(8)
+                                    .underlineTextField()
+                                
+                                SecureField("Your private Code", text: $code)
+                                    .cornerRadius(8)
+                                    .underlineTextField()
+                            }
+                          
+                        
                             if !password.isEmpty && !confirmPassword.isEmpty {
                                 if password == confirmPassword {
                                     Image(systemName: "checkmark.circle.fill")
@@ -130,7 +138,7 @@ struct signUpView: View {
                         
                         Button {
                             Task {
-                               try await viewModel.createUser(withEmail: email, password: password, fullName: fullName)
+                                try await viewModel.createUser(withEmail: email, password: password, fullName: fullName , code : code)
                             }
                         } label: {
                             Text("Sign up")

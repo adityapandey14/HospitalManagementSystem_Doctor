@@ -19,6 +19,7 @@ protocol AuthenticationFormProtocol {
 enum AuthError: Error {
     case noCurrentUser
     case notAdmin
+    case CodeIsNotCorrect
     // Add other error cases as needed
 }
 @MainActor
@@ -65,8 +66,17 @@ class AuthViewModel: ObservableObject {
             // If there is at least one document with the given email, return true (user is admin)
             return !querySnapshot.documents.isEmpty
         }
-    func createUser(withEmail email : String , password: String , fullName: String ) async throws {
+    func createUser(withEmail email : String , password: String , fullName: String , code : String ) async throws {
+        
+       
         do {
+            
+            let isCodeAvailable = try await checkCode(code: code)
+            guard isCodeAvailable else {
+                throw AuthError.CodeIsNotCorrect
+            }
+            
+            
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             let user = User(id: result.user.uid , fullName: fullName, email: email)
@@ -82,7 +92,38 @@ class AuthViewModel: ObservableObject {
         } catch {
             print("DEBUG: Failed to create user with error \(error.localizedDescription)")
         }
+        
+        
     }
+    
+    
+    func checkCode(code: String) async throws -> Bool {
+        let firestore = Firestore.firestore()
+
+        // Query Firestore to check if the code exists in the codeGenerator collection
+        let querySnapshot = try await firestore
+            .collection("codeGenerator")
+            .whereField("code", isEqualTo: code)
+            .getDocuments()
+
+        // If there is at least one document with the given code, delete them
+        if !querySnapshot.documents.isEmpty {
+            // Asynchronously delete all matching documents
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                for document in querySnapshot.documents {
+                    group.addTask {
+                        try await document.reference.delete()
+                    }
+                }
+            }
+            return true
+        }
+
+        // Always return false, regardless of whether the code existed or not
+        return false
+    }
+
+    
     
     func signOut() {
         do {

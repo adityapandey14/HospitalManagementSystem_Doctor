@@ -8,8 +8,20 @@
 import SwiftUI
 
 struct Homepage: View {
+    @EnvironmentObject var viewModel : AuthViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Spacer()
+            Button(action: {
+                viewModel.signOut()
+            }) {
+                Image(systemName: "gear")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(Color.blue)
+            }
+            .padding(.all, 10)
+        }
     }
 }
 

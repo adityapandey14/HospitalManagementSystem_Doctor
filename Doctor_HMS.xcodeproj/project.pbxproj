@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48D525122BD90D9B00E22746 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 48D525112BD90D9B00E22746 /* FirebaseFunctions */; };
 		DF6B2EB22BD58D0500FAD930 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B2EB12BD58D0500FAD930 /* User.swift */; };
 		DF6B2EB62BD58D3C00FAD930 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B2EB52BD58D3C00FAD930 /* UserDetails.swift */; };
 		DF6B2EBD2BD58E2A00FAD930 /* appFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B2EBC2BD58E2A00FAD930 /* appFonts.swift */; };
@@ -81,6 +82,7 @@
 				DFC22C8F2BD26A0000B2AD68 /* FirebaseDatabaseSwift in Frameworks */,
 				DFC22C8D2BD26A0000B2AD68 /* FirebaseDatabase in Frameworks */,
 				DFC22C952BD26A0000B2AD68 /* FirebaseMessaging in Frameworks */,
+				48D525122BD90D9B00E22746 /* FirebaseFunctions in Frameworks */,
 				DFC22C892BD26A0000B2AD68 /* FirebaseAnalyticsSwift in Frameworks */,
 				DFC22C912BD26A0000B2AD68 /* FirebaseFirestore in Frameworks */,
 				DFC22C972BD26A0000B2AD68 /* FirebaseStorage in Frameworks */,
@@ -213,6 +215,7 @@
 				DFC22C922BD26A0000B2AD68 /* FirebaseFirestoreSwift */,
 				DFC22C942BD26A0000B2AD68 /* FirebaseMessaging */,
 				DFC22C962BD26A0000B2AD68 /* FirebaseStorage */,
+				48D525112BD90D9B00E22746 /* FirebaseFunctions */,
 			);
 			productName = Doctor_HMS;
 			productReference = DFC22C542BD268FE00B2AD68 /* Doctor_HMS.app */;
@@ -703,6 +706,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		48D525112BD90D9B00E22746 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DFC22C862BD269D200B2AD68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
 		DFC22C882BD26A0000B2AD68 /* FirebaseAnalyticsSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DFC22C862BD269D200B2AD68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
