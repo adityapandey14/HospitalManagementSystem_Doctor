@@ -66,6 +66,7 @@ class AuthViewModel: ObservableObject {
             // If there is at least one document with the given email, return true (user is admin)
             return !querySnapshot.documents.isEmpty
         }
+    
     func createUser(withEmail email : String , password: String , fullName: String , code : String ) async throws {
         
        

@@ -21,6 +21,7 @@ struct Homepage: View {
                     .foregroundColor(Color.blue)
             }
             .padding(.all, 10)
+            
         }
     }
 }

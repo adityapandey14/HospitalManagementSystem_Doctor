@@ -16,31 +16,6 @@ struct signUpView: View {
     var body: some View {
         NavigationView{
             VStack{
-                //login and signup option
-//                HStack{
-////                    VStack{
-////                        NavigationLink(destination: loginView()){
-////                            Text("Login")
-////                                .foregroundColor(.black)
-////                                .font(AppFont.mediumSemiBold)
-////                        }
-////                        Rectangle()
-////                            .frame(width: 100, height: 3)
-////                            .foregroundStyle(Color.clear)
-////                    }
-//                    Spacer()
-//                    VStack{
-//                        NavigationLink(destination: signUpView()){
-//                            Text("Sign up")
-//                                .foregroundColor(.black)
-//                                .font(AppFont.mediumSemiBold)
-//                        }
-//                        Rectangle()
-//                            .frame(width: 100, height: 3)
-//                            .foregroundStyle(Color.accent)
-//                    }
-//                }
-                
                 //sign up details
                 VStack(alignment: .leading){
                     VStack(alignment: .leading){
@@ -134,11 +109,12 @@ struct signUpView: View {
                 
                 //button
                 Button(action: signUp) {
-                    NavigationLink(destination: HomepageComplete() ){
+
                         
                         Button {
                             Task {
                                 try await viewModel.createUser(withEmail: email, password: password, fullName: fullName , code : code)
+                                isSignUpSuccessful = true
                             }
                         } label: {
                             Text("Sign up")
@@ -146,15 +122,18 @@ struct signUpView: View {
                                 .frame(width: 325, height: 50)
                                 .background(Color.midNightExpress)
                                 .cornerRadius(10)
+                        }  
+                        .sheet(isPresented: $isSignUpSuccessful) {
+                            if isSignUpSuccessful {
+                                Profile_Create(email: email, password: password, fullName: fullName)
+                            }
                         }
                       
-                    }
+                    
                 }
                 .disabled(!FormIsValid)
                 .opacity(FormIsValid ? 1.0 : 0.5)
-                .sheet(isPresented: $isSignUpSuccessful) {
-                    Profile_Create(email:email, password:password,fullName: fullName)
-                }
+              
                 
                 HStack{
                     Text("Already have an account?")
