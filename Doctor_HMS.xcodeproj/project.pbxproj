@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4890D4272BE0D91500EF8750 /* HomepageComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4262BE0D91500EF8750 /* HomepageComplete.swift */; };
+		4890D42A2BE0D96E00EF8750 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4292BE0D96E00EF8750 /* ProfilePage.swift */; };
+		4890D42C2BE0D99000EF8750 /* newPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D42B2BE0D99000EF8750 /* newPassword.swift */; };
+		4890D42E2BE0D99E00EF8750 /* doctorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D42D2BE0D99E00EF8750 /* doctorDetails.swift */; };
+		4890D4302BE0DA9300EF8750 /* Doctor_Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D42F2BE0DA9300EF8750 /* Doctor_Model.swift */; };
+		4890D4322BE0DAB800EF8750 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4312BE0DAB800EF8750 /* ImagePicker.swift */; };
+		4890D4342BE0DAC500EF8750 /* DoctorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4332BE0DAC500EF8750 /* DoctorViewModel.swift */; };
+		4890D4362BE0DAD400EF8750 /* DoctorEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4352BE0DAD400EF8750 /* DoctorEdit.swift */; };
 		48D525122BD90D9B00E22746 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 48D525112BD90D9B00E22746 /* FirebaseFunctions */; };
 		DF6B2EB22BD58D0500FAD930 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B2EB12BD58D0500FAD930 /* User.swift */; };
 		DF6B2EB62BD58D3C00FAD930 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B2EB52BD58D3C00FAD930 /* UserDetails.swift */; };
@@ -52,6 +60,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4890D4262BE0D91500EF8750 /* HomepageComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageComplete.swift; sourceTree = "<group>"; };
+		4890D4292BE0D96E00EF8750 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
+		4890D42B2BE0D99000EF8750 /* newPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newPassword.swift; sourceTree = "<group>"; };
+		4890D42D2BE0D99E00EF8750 /* doctorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = doctorDetails.swift; sourceTree = "<group>"; };
+		4890D42F2BE0DA9300EF8750 /* Doctor_Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doctor_Model.swift; sourceTree = "<group>"; };
+		4890D4312BE0DAB800EF8750 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		4890D4332BE0DAC500EF8750 /* DoctorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorViewModel.swift; sourceTree = "<group>"; };
+		4890D4352BE0DAD400EF8750 /* DoctorEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorEdit.swift; sourceTree = "<group>"; };
 		DF6B2EB12BD58D0500FAD930 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DF6B2EB52BD58D3C00FAD930 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		DF6B2EBC2BD58E2A00FAD930 /* appFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appFonts.swift; sourceTree = "<group>"; };
@@ -108,6 +124,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4890D4282BE0D95000EF8750 /* ProfileDetail */ = {
+			isa = PBXGroup;
+			children = (
+				4890D4292BE0D96E00EF8750 /* ProfilePage.swift */,
+				4890D42B2BE0D99000EF8750 /* newPassword.swift */,
+				4890D42D2BE0D99E00EF8750 /* doctorDetails.swift */,
+				4890D42F2BE0DA9300EF8750 /* Doctor_Model.swift */,
+				4890D4312BE0DAB800EF8750 /* ImagePicker.swift */,
+				4890D4352BE0DAD400EF8750 /* DoctorEdit.swift */,
+				4890D4332BE0DAC500EF8750 /* DoctorViewModel.swift */,
+			);
+			path = ProfileDetail;
+			sourceTree = "<group>";
+		};
 		DF6B2EAE2BD58CDF00FAD930 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +180,8 @@
 				DFC22C572BD268FE00B2AD68 /* Doctor_HMSApp.swift */,
 				DFC22C592BD268FE00B2AD68 /* ContentView.swift */,
 				DF6B2EC82BD597B300FAD930 /* Homepage.swift */,
+				4890D4262BE0D91500EF8750 /* HomepageComplete.swift */,
+				4890D4282BE0D95000EF8750 /* ProfileDetail */,
 				DF6B2EAE2BD58CDF00FAD930 /* Authentication */,
 				DFC22C5B2BD268FF00B2AD68 /* Assets.xcassets */,
 				DFC22C5D2BD268FF00B2AD68 /* Doctor_HMS.entitlements */,
@@ -335,15 +367,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4890D42C2BE0D99000EF8750 /* newPassword.swift in Sources */,
 				DFC22C5A2BD268FE00B2AD68 /* ContentView.swift in Sources */,
 				DF6B2EBD2BD58E2A00FAD930 /* appFonts.swift in Sources */,
+				4890D42E2BE0D99E00EF8750 /* doctorDetails.swift in Sources */,
 				DF6B2EB62BD58D3C00FAD930 /* UserDetails.swift in Sources */,
 				DF6B2ED12BD59B7700FAD930 /* ProfileInputView.swift in Sources */,
 				DF6B2ECB2BD597E200FAD930 /* AuthViewModel.swift in Sources */,
 				DF6B2ECF2BD5998300FAD930 /* loginView.swift in Sources */,
+				4890D4362BE0DAD400EF8750 /* DoctorEdit.swift in Sources */,
+				4890D42A2BE0D96E00EF8750 /* ProfilePage.swift in Sources */,
+				4890D4302BE0DA9300EF8750 /* Doctor_Model.swift in Sources */,
+				4890D4342BE0DAC500EF8750 /* DoctorViewModel.swift in Sources */,
 				DF6B2ECD2BD5996200FAD930 /* signUpView.swift in Sources */,
 				DF6B2EC92BD597B300FAD930 /* Homepage.swift in Sources */,
 				DFC22C582BD268FE00B2AD68 /* Doctor_HMSApp.swift in Sources */,
+				4890D4322BE0DAB800EF8750 /* ImagePicker.swift in Sources */,
+				4890D4272BE0D91500EF8750 /* HomepageComplete.swift in Sources */,
 				DF6B2EB22BD58D0500FAD930 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

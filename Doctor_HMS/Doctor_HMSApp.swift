@@ -11,6 +11,7 @@ import Firebase
 @main
 struct Doctor_HMSApp: App {
     @StateObject var viewModel = AuthViewModel()
+    @StateObject var profileviewModel = DoctorViewModel()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
      init(){ //to make tab bar have green accent on selected bar icon
         // FirebaseApp.configure()
@@ -26,6 +27,7 @@ struct Doctor_HMSApp: App {
         //     onboardingPageSwiftUIView()
              ContentView()
                  .environmentObject(viewModel)
+                 .environmentObject(profileviewModel)
          }
      }
 }

@@ -134,7 +134,7 @@ struct signUpView: View {
                 
                 //button
                 Button(action: signUp) {
-                    NavigationLink(destination: loginView() ){
+                    NavigationLink(destination: HomepageComplete() ){
                         
                         Button {
                             Task {
@@ -152,9 +152,9 @@ struct signUpView: View {
                 }
                 .disabled(!FormIsValid)
                 .opacity(FormIsValid ? 1.0 : 0.5)
-//                .sheet(isPresented: $isSignUpSuccessful) {
-//                    Profile_Create(email:email, password:password,fullName: fullName)
-//                }
+                .sheet(isPresented: $isSignUpSuccessful) {
+                    Profile_Create(email:email, password:password,fullName: fullName)
+                }
                 
                 HStack{
                     Text("Already have an account?")
