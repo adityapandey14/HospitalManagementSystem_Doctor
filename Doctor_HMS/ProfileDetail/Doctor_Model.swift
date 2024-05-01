@@ -23,14 +23,12 @@ struct DoctorM: Equatable, Codable{
     var dob:Date
     var address:String
     var pincode:String
+    var department : String
+    var speciality : String
+    var cabinNo : String
     var profilephoto: String?
     
 }
 
 
-struct DepartmentModel : Equatable , Codable {
-    var department : String
-    var Doctorid : String
-    var speciality : String
-    
-}
+

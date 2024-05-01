@@ -79,9 +79,25 @@ struct Profile_Create: View {
                     }
                     .padding(.bottom, 15.0)
                     
-                    TextField("your experience details" , text: $profileViewModel.currentProfile.experience)
-                    TextField("your qualification Details" , text: $profileViewModel.currentProfile.qualification)
-                    TextField("Your description" , text: $profileViewModel.currentProfile.descript)
+                    VStack{
+                        
+                        TextField("your experience details" , text: $profileViewModel.currentProfile.experience)
+                            .padding(.bottom, 15.0)
+                        TextField("your qualification Details" , text: $profileViewModel.currentProfile.qualification)
+                            .padding(.bottom, 15.0)
+                        TextField("Your description" , text: $profileViewModel.currentProfile.descript)
+                            .padding(.bottom, 15.0)
+                        
+                        TextField("Your Department" , text: $profileViewModel.currentProfile.department)
+                            .padding(.bottom, 15.0)
+                        
+                        TextField("Your Speciality" , text: $profileViewModel.currentProfile.speciality)
+                            .padding(.bottom, 15.0)
+                        TextField("Your Cabin Number" , text: $profileViewModel.currentProfile.cabinNo)
+                            .padding(.bottom, 15.0)
+                        
+                    }
+                  
                     
                     HStack {
                         DatePicker("Date of Birth", selection: $profileViewModel.currentProfile.dob,

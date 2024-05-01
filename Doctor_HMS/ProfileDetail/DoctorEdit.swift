@@ -8,166 +8,136 @@
 import SwiftUI
 import MobileCoreServices
 import UniformTypeIdentifiers
+
 struct Profile_Edit: View {
     @Environment(\.presentationMode) var presentationMode
-    
     @EnvironmentObject var viewModel: AuthViewModel
     @EnvironmentObject var profileViewModel: DoctorViewModel
-    @State private var navigationLinkIsActive = false
-    @State private var isImagePickerP = false
+
     @State private var isImagePickerPresented = false
-    @State private var posterImage : UIImage?
-    @State private var defaultposterImage : UIImage = UIImage(named: "default_hackathon_poster")!
+    @State private var posterImage: UIImage?
+    @State private var defaultPosterImage: UIImage = UIImage(named: "default_hackathon_poster")!
   
     let genders = ["Male", "Female", "Other"]
-   
-//    @State private var healthRecordPDFs: [Data] = [] // Array to store PDF data
-        @State private var selectedPDFName: String? = nil // Store selected PDF name
-        
 
     var body: some View {
-        VStack {
-            Form {
-                Section(header: Text("Edit Profile")) {
-                    // CameraButton
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                                                        isImagePickerPresented.toggle()
-                                                    }) {
-                                                        if let posterImage = posterImage {
-                                                            Image(uiImage: posterImage)
-                                                                .resizable()
-                                                                .scaledToFit()
-                                                                .frame(width: 100, height: 100)
-                                                                .cornerRadius(10)
-                                                        } else {
-                                                            if let posterURL = profileViewModel.currentProfile.profilephoto {
-                                                                AsyncImage(url: URL(string: posterURL)) { phase in
-                                                                    switch phase {
-                                                                    case .success(let image):
-                                                                        image
-                                                                            .resizable()
-                                                                            .aspectRatio(contentMode: .fill)
-                                                                            .frame(width: 350, height: 200)
-                                                                            .cornerRadius(20.0)
-                                                                            .clipShape(Circle())
-                                                                            .padding([.leading, .bottom, .trailing])
-                                                                    default:
-                                                                        ProgressView()
-                                                                            .frame(width: 50, height: 50)
-                                                                            .padding([.leading, .bottom, .trailing])
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                Image(uiImage: UIImage(named: "default_hackathon_poster")!)
-                                                                    .resizable()
-                                                                    .aspectRatio(contentMode: .fill)
-                                                                    .frame(width: 350, height: 200)
-                                                                    .cornerRadius(20.0)
-                                                                    .clipShape(Circle())
-                                                                    .padding([.leading, .bottom, .trailing])
-                                                            }
-                                                        }
-                                                    }
-                                                    .sheet(isPresented: $isImagePickerPresented) {
-                                                        ImageP(posterImage: $posterImage, defaultPoster: defaultposterImage)
-                                                    }
-                        Spacer()
-                    }
-                    .padding(.top, 20)
-                    .padding(.bottom, 20)
-                    
-                    HStack {
-                        Text("Full Name: ")
-                        TextField("Name", text: $profileViewModel.currentProfile.fullName)
-                    }
-                    .padding(.bottom, 15.0)
-                    
-                    
-                    HStack {
-                        Text("Qualification :")
-                        TextField("Qualification", text: $profileViewModel.currentProfile.qualification)
-                            .padding()
-                        Text("Experience")
-                        TextField("Experience" , text: $profileViewModel.currentProfile.experience)
-                            .padding()
-                        Text("description")
-                        TextField("description" , text: $profileViewModel.currentProfile.descript)
-                    }
-                    
-                  
-                    
-                    HStack {
-                                Text("Mobile Number: ")
-                                TextField("Enter Mobile Number", text: $profileViewModel.currentProfile.mobileno)
-                                    .keyboardType(.numberPad)
-                            }
-                    .padding(.bottom, 15.0)
-                    
-                    HStack {
-                                Text("qualification: ")
-                                TextField("Enter Mobile Number", text: $profileViewModel.currentProfile.qualification)
-                                    .keyboardType(.numberPad)
-                            }
-                    
-                    .padding(.bottom, 15.0)
-                    
-                    HStack{
-                        Picker("Select Gender", selection: $profileViewModel.currentProfile.gender) {
-                            ForEach(genders, id: \.self) {
-                                Text($0)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                    }.padding(.bottom, 15.0)
-                  
-                
-                    
-                    HStack {
-                        DatePicker("Date of Birth", selection: $profileViewModel.currentProfile.dob,
-                                   in: Date()..., displayedComponents: [.date])
-                    }
-                    .padding(.bottom, 15.0)
-                    
-                    HStack {
-                        Text("Address: ")
-                        TextField("Your Address", text: $profileViewModel.currentProfile.address)
-                    }
-                    .padding(.bottom, 15.0)
-                    
-                    HStack {
-                                Text("Pincode: ")
-                        TextField("Enter Pincode", text: $profileViewModel.currentProfile.pincode)
-                                    .keyboardType(.numberPad)
-                            }
-                    .padding(.bottom, 15.0)
-                    
-
+        ScrollView {
+            VStack(alignment: .leading, spacing: 15) {
+                // Image Picker Button
+                HStack {
+                    Button(action: {
+                        isImagePickerPresented.toggle()
+                    }) {
+                        if let posterImage = posterImage {
+                            Image(uiImage: posterImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                        } else if let posterURL = profileViewModel.currentProfile.profilephoto {
+                            AsyncImage(url: URL(string: posterURL)) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
+                                        .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                                default:
+                                    ProgressView()
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
+                                        .overlay(Circle().stroke(Color.gray, lineWidth: 2))
                                 }
-            }
-            
-            Button(action: {
-                Task {
-                    
-                    profileViewModel.updateProfile(profileViewModel.currentProfile, posterImage: posterImage ?? defaultposterImage, userId: viewModel.currentUser?.id) {
+                            }
+                        } else {
+                            Image(uiImage: defaultPosterImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.gray, lineWidth: 2))
                         }
-                    
-                    
+                    }
+                    .sheet(isPresented: $isImagePickerPresented) {
+                        ImageP(posterImage: $posterImage, defaultPoster: defaultPosterImage)
+                    }
+                    Spacer()
                 }
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Edit Profile")
-                    .foregroundColor(.blue)
-                    .padding()
+                .padding(.top, 20)
+                .padding(.bottom, 20)
+
+                // Form Fields
+                Group {
+                    LabeledTextField(label: "Full Name", text: $profileViewModel.currentProfile.fullName)
+                    LabeledTextField(label: "Experience", text: $profileViewModel.currentProfile.experience)
+                    LabeledTextField(label: "Description", text: $profileViewModel.currentProfile.descript)
+                    LabeledTextField(label: "Mobile Number", text: $profileViewModel.currentProfile.mobileno, keyboardType: .numberPad)
+                    LabeledTextField(label: "Qualification", text: $profileViewModel.currentProfile.qualification)
+                    Picker("Select Gender", selection: $profileViewModel.currentProfile.gender) {
+                        ForEach(genders, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.top, 10)
+
+                    DatePicker(
+                        "Date of Birth",
+                        selection: $profileViewModel.currentProfile.dob,
+                        displayedComponents: [.date]
+                    )
+                    .padding(.top, 10)
+
+                    LabeledTextField(label: "Address", text: $profileViewModel.currentProfile.address)
+                    LabeledTextField(label: "Pincode", text: $profileViewModel.currentProfile.pincode, keyboardType: .numberPad)
+                    LabeledTextField(label: "Department", text: $profileViewModel.currentProfile.department)
+                    LabeledTextField(label: "Speciality", text: $profileViewModel.currentProfile.speciality)
+                    LabeledTextField(label: "Cabin Number", text: $profileViewModel.currentProfile.cabinNo)
+                }
+                .padding(.bottom, 10)
+
+                // Edit Profile Button
+                Button(action: {
+                    Task {
+                        profileViewModel.updateProfile(
+                            profileViewModel.currentProfile,
+                            posterImage: posterImage ?? defaultPosterImage,
+                            userId: viewModel.currentUser?.id
+                        ) {
+                            print("Profile updated successfully")
+                        }
+                    }
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Edit Profile")
+                        .foregroundColor(.white)
+                        .frame(width: 325, height: 50)
+                        .background(Color.midNightExpress)
+                        .cornerRadius(10)
+                }
             }
-           
-            
-            
+            .padding(.horizontal)
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Create Your Profile")
-        .padding(.horizontal, 7)
+        .navigationTitle("Edit Your Profile")
     }
 }
 
+struct LabeledTextField: View {
+    let label: String
+    @Binding var text: String
+    var keyboardType: UIKeyboardType = .default
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(label)
+                .font(.headline)
+            TextField("Enter \(label)", text: $text)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .keyboardType(keyboardType)
+                .padding(.vertical, 5)
+        }
+    }
+}

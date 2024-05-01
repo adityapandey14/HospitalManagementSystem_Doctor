@@ -22,6 +22,9 @@ class DoctorViewModel: ObservableObject {
         dob:Date(),
         address:"",
         pincode:"",
+        department: "",
+        speciality: "",
+        cabinNo: "",
         profilephoto: nil
     )
     private let db = Firestore.firestore()
@@ -108,22 +111,7 @@ class DoctorViewModel: ObservableObject {
     
     
 
-    func addDepartment(department : String , speciality : String ,userId: String?, completion: @escaping () -> Void) {
-        let db = Firestore.firestore()
-        let data: [String: Any] = [
-            "dpeartment": department,
-            "Doctorid":  userId,
-            "speciality": speciality
-        ]
-        
-        db.collection("department").addDocument(data: data) { error in
-            if let error = error {
-                print("Error adding document: \(error.localizedDescription)")
-            } else {
-                print("Document added successfully!")
-            }
-        }
-    }
+
     
    
 
