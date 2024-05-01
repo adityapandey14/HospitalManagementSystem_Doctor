@@ -109,20 +109,12 @@ struct signUpView: View {
                 
                 //button
                 Button(action: signUp) {
-
-                        
-                        Button {
-                            Task {
-                                try await viewModel.createUser(withEmail: email, password: password, fullName: fullName , code : code)
-                                isSignUpSuccessful = true
-                            }
-                        } label: {
-                            Text("Sign up")
+                                Text("Sign up")
                                 .foregroundColor(.white)
                                 .frame(width: 325, height: 50)
                                 .background(Color.midNightExpress)
                                 .cornerRadius(10)
-                        }  
+                    
                         .sheet(isPresented: $isSignUpSuccessful) {
                             if isSignUpSuccessful {
                                 Profile_Create(email: email, password: password, fullName: fullName)
@@ -157,7 +149,12 @@ struct signUpView: View {
     }
     
     private func signUp() {
-        isSignUpSuccessful = true
+        Task {
+            if try await viewModel.checkCode(code: code)==true {
+                isSignUpSuccessful = true
+            }
+        }
+       
     }
 }
 
