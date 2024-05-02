@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		139D722D2BE3A18700300EEA /* dateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D722C2BE3A18700300EEA /* dateModel.swift */; };
 		4890D4272BE0D91500EF8750 /* HomepageComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4262BE0D91500EF8750 /* HomepageComplete.swift */; };
 		4890D42A2BE0D96E00EF8750 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4292BE0D96E00EF8750 /* ProfilePage.swift */; };
 		4890D42C2BE0D99000EF8750 /* newPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D42B2BE0D99000EF8750 /* newPassword.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		139D722C2BE3A18700300EEA /* dateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dateModel.swift; sourceTree = "<group>"; };
 		4890D4262BE0D91500EF8750 /* HomepageComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageComplete.swift; sourceTree = "<group>"; };
 		4890D4292BE0D96E00EF8750 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		4890D42B2BE0D99000EF8750 /* newPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newPassword.swift; sourceTree = "<group>"; };
@@ -124,6 +126,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		139D722B2BE3A16F00300EEA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				139D722C2BE3A18700300EEA /* dateModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		4890D4282BE0D95000EF8750 /* ProfileDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +185,7 @@
 		DFC22C562BD268FE00B2AD68 /* Doctor_HMS */ = {
 			isa = PBXGroup;
 			children = (
+				139D722B2BE3A16F00300EEA /* Models */,
 				DFC22C842BD2698F00B2AD68 /* GoogleService-Info.plist */,
 				DF6B2EBC2BD58E2A00FAD930 /* appFonts.swift */,
 				DFC22C572BD268FE00B2AD68 /* Doctor_HMSApp.swift */,
@@ -369,6 +380,7 @@
 			files = (
 				4890D42C2BE0D99000EF8750 /* newPassword.swift in Sources */,
 				DFC22C5A2BD268FE00B2AD68 /* ContentView.swift in Sources */,
+				139D722D2BE3A18700300EEA /* dateModel.swift in Sources */,
 				DF6B2EBD2BD58E2A00FAD930 /* appFonts.swift in Sources */,
 				4890D42E2BE0D99E00EF8750 /* doctorDetails.swift in Sources */,
 				DF6B2EB62BD58D3C00FAD930 /* UserDetails.swift in Sources */,
