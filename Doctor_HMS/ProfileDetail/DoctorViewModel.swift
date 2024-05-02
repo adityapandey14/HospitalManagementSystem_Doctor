@@ -198,21 +198,22 @@ class DoctorViewModel: ObservableObject {
     
     func AddDepartment(department: String, speciality: String, cabinNo: String) async throws {
         let db = Firestore.firestore()
-        
+
+        let departmentLower = department.lowercased() // Ensure department is lowercase
         // Get the current user ID
         guard let userId = Auth.auth().currentUser?.uid else {
             print("User not authenticated")
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
         }
-        
+
         db.collection("department")
-            .whereField("departmentTypes", isEqualTo: department)
+            .whereField("departmentTypes", isEqualTo: departmentLower) // Use lowercase when querying
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     print("Error querying department: \(error.localizedDescription)")
                     return
                 }
-                
+
                 if let existingDepartment = querySnapshot?.documents.first {
                     // The department exists. Check if the specialisation already exists for this user.
                     let specialisationCollection = existingDepartment.reference.collection("allSpecialisation")
@@ -243,7 +244,7 @@ class DoctorViewModel: ObservableObject {
                                     "doctorId": userId,
                                     "cabinNo": cabinNo,
                                     "speciality": speciality,
-                                    "department": department
+                                    "department": departmentLower // Store in lowercase
                                 ]) { error in
                                     if let error = error {
                                         print("Error adding specialisation: \(error.localizedDescription)")
@@ -258,7 +259,7 @@ class DoctorViewModel: ObservableObject {
                     let newDepartment = db.collection("department").document() // Auto-generated ID
                     
                     newDepartment.setData([
-                        "departmentTypes": department
+                        "departmentTypes": departmentLower // Store department name in lowercase
                     ]) { error in
                         if let error = error {
                             print("Error creating new department: \(error.localizedDescription)")
@@ -269,7 +270,7 @@ class DoctorViewModel: ObservableObject {
                             "doctorId": userId,
                             "cabinNo": cabinNo,
                             "speciality": speciality,
-                            "department": department
+                            "department": departmentLower // Use lowercase for consistency
                         ]) { error in
                             if let error = error {
                                 print("Error adding specialisation to new department: \(error.localizedDescription)")
