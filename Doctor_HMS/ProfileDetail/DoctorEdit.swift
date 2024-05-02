@@ -111,7 +111,7 @@ struct Profile_Edit: View {
                         }
                         do {
                                               // Call the async method with await
-                                              try await profileViewModel.updateDepartment(
+                                              try await profileViewModel.AddDepartment(
                                                   department: profileViewModel.currentProfile.department,
                                                   speciality: profileViewModel.currentProfile.speciality,
                                                   cabinNo: profileViewModel.currentProfile.cabinNo

@@ -144,7 +144,7 @@ struct Profile_Create: View {
                                 profileViewModel.updateProfile(profileViewModel.currentProfile, posterImage: posterImage ?? defaultposterImage, userId: viewModel.currentUser?.id) {
                                 }
                                 
-                                try await profileViewModel.updateDepartment(
+                                try await profileViewModel.AddDepartment(
                                     department: profileViewModel.currentProfile.department,
                                     speciality: profileViewModel.currentProfile.speciality,
                                     cabinNo: profileViewModel.currentProfile.cabinNo)

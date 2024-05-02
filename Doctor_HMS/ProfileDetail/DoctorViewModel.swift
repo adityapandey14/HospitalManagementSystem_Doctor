@@ -114,55 +114,172 @@ class DoctorViewModel: ObservableObject {
   
 
     // This function is now marked with 'async' since it performs an asynchronous operation
-    func updateDepartment(department: String, speciality: String, cabinNo: String) async throws {
-        let db = Firestore.firestore()
+//    func AddDepartment(department: String, speciality: String, cabinNo: String) async throws {
+//        let db = Firestore.firestore()
+//        let departmentLower = department
+//
+//        // Get the current user ID
+//        guard let userId = Auth.auth().currentUser?.uid else {
+//            print("User not authenticated")
+//            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+//        }
+//
+//        // Data to be used in Firestore document
+//        let data: [String: Any] = [
+//            "department":  department,
+//            "speciality": speciality,
+//            "cabinNo": cabinNo,
+//            "doctorId": userId
+//        ]
+//
+//        do {
+//            // Query the subcollection to check if a document with the same doctorId already exists
+//  
+//                // If no document with the doctorId exists, create a new one
+//                try await db.collection("department")
+//                            .document("abcd")
+//                            .collection("allSpecialisation")
+//                            .addDocument(data: data)
+//                print("Department created successfully")
+//            
+//
+//        } catch {
+//            print("Error updating or creating document: \(error.localizedDescription)")
+//            throw error  // Re-throw the error for higher-level handling
+//        }
+//    }
 
+    
+    
+//    func updateDepartment(department: String, speciality: String, cabinNo: String) async throws {
+//        let db = Firestore.firestore()
+//
+//        // Get the current user ID
+//        guard let userId = Auth.auth().currentUser?.uid else {
+//            print("User not authenticated")
+//            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+//        }
+//
+//        // Convert department to lowercase
+//        let departmentLower = department.lowercased()
+//
+//        // Data to be used in Firestore document
+//        let data: [String: Any] = [
+//            "department": departmentLower,
+//            "speciality": speciality,
+//            "cabinNo": cabinNo,
+//            "doctorId": userId
+//        ]
+//
+//        do {
+//            // Query the subcollection to check if a document with the same doctorId already exists
+//            let querySnapshot = try await db.collection("department")
+//                                           .document(departmentLower)
+//                                           .collection("allSpecialisation")
+//                                           .whereField("doctorId", isEqualTo: userId)
+//                                           .getDocuments()
+//
+//            if let existingDocument = querySnapshot.documents.first {
+//                // If a document with the doctorId exists, update it with new data
+//                try await db.collection("department")
+//                            .document(departmentLower)
+//                            .collection("allSpecialisation")
+//                            .document(existingDocument.documentID)
+//                            .updateData(data)
+//                print("Department updated successfully")
+//            }
+//
+//        } catch {
+//            print("Error updating or creating document: \(error.localizedDescription)")
+//            throw error  // Re-throw the error for higher-level handling
+//        }
+//    }
+
+    
+    func AddDepartment(department: String, speciality: String, cabinNo: String) async throws {
+        let db = Firestore.firestore()
+        
         // Get the current user ID
         guard let userId = Auth.auth().currentUser?.uid else {
             print("User not authenticated")
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
         }
-
-        // Convert department to lowercase
-        let departmentLower = department.lowercased()
-
-        // Data to be used in Firestore document
-        let data: [String: Any] = [
-            "department": departmentLower,
-            "speciality": speciality,
-            "cabinNo": cabinNo,
-            "doctorId": userId
-        ]
-
-        do {
-            // Query the subcollection to check if a document with the same doctorId already exists
-            let querySnapshot = try await db.collection("department")
-                                           .document(departmentLower)
-                                           .collection("allSpecialisation")
-                                           .whereField("doctorId", isEqualTo: userId)
-                                           .getDocuments()
-
-            if let existingDocument = querySnapshot.documents.first {
-                // If a document with the doctorId exists, update it with new data
-                try await db.collection("department")
-                            .document(departmentLower)
-                            .collection("allSpecialisation")
-                            .document(existingDocument.documentID)
-                            .updateData(data)
-                print("Department updated successfully")
-            } else {
-                // If no document with the doctorId exists, create a new one
-                try await db.collection("department")
-                            .document(departmentLower)
-                            .collection("allSpecialisation")
-                            .addDocument(data: data)
-                print("Department created successfully")
+        
+        db.collection("department")
+            .whereField("departmentTypes", isEqualTo: department)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error querying department: \(error.localizedDescription)")
+                    return
+                }
+                
+                if let existingDepartment = querySnapshot?.documents.first {
+                    // The department exists. Check if the specialisation already exists for this user.
+                    let specialisationCollection = existingDepartment.reference.collection("allSpecialisation")
+                    
+                    specialisationCollection
+                        .whereField("doctorId", isEqualTo: userId)
+                        .getDocuments { (specSnapshot, error) in
+                            if let error = error {
+                                print("Error querying specialisations: \(error.localizedDescription)")
+                                return
+                            }
+                            
+                            if let existingSpecialisation = specSnapshot?.documents.first {
+                                // If the specialisation already exists, update it.
+                                existingSpecialisation.reference.updateData([
+                                    "cabinNo": cabinNo,
+                                    "speciality": speciality
+                                ]) { error in
+                                    if let error = error {
+                                        print("Error updating specialisation: \(error.localizedDescription)")
+                                    } else {
+                                        print("Successfully updated existing specialisation")
+                                    }
+                                }
+                            } else {
+                                // If it doesn't exist, create a new one.
+                                specialisationCollection.addDocument(data: [
+                                    "doctorId": userId,
+                                    "cabinNo": cabinNo,
+                                    "speciality": speciality,
+                                    "department": department
+                                ]) { error in
+                                    if let error = error {
+                                        print("Error adding specialisation: \(error.localizedDescription)")
+                                    } else {
+                                        print("Successfully added new specialisation")
+                                    }
+                                }
+                            }
+                        }
+                } else {
+                    // The department does not exist. Create it and then add the specialisation.
+                    let newDepartment = db.collection("department").document() // Auto-generated ID
+                    
+                    newDepartment.setData([
+                        "departmentTypes": department
+                    ]) { error in
+                        if let error = error {
+                            print("Error creating new department: \(error.localizedDescription)")
+                            return
+                        }
+                        
+                        newDepartment.collection("allSpecialisation").addDocument(data: [
+                            "doctorId": userId,
+                            "cabinNo": cabinNo,
+                            "speciality": speciality,
+                            "department": department
+                        ]) { error in
+                            if let error = error {
+                                print("Error adding specialisation to new department: \(error.localizedDescription)")
+                            } else {
+                                print("Successfully created new department and added specialisation")
+                            }
+                        }
+                    }
+                }
             }
-
-        } catch {
-            print("Error updating or creating document: \(error.localizedDescription)")
-            throw error  // Re-throw the error for higher-level handling
-        }
     }
 
 
