@@ -143,6 +143,12 @@ struct Profile_Create: View {
                             
                                 profileViewModel.updateProfile(profileViewModel.currentProfile, posterImage: posterImage ?? defaultposterImage, userId: viewModel.currentUser?.id) {
                                 }
+                                
+                                try await profileViewModel.updateDepartment(
+                                    department: profileViewModel.currentProfile.department,
+                                    speciality: profileViewModel.currentProfile.speciality,
+                                    cabinNo: profileViewModel.currentProfile.cabinNo)
+                                
                             } catch {
                                 
                                 print("Error: \(error.localizedDescription)")

@@ -12,6 +12,8 @@ struct HealthRecord: Equatable, Codable{
     var filename: String
     var downloadURL: String
 }
+
+
 struct DoctorM: Equatable, Codable{
     
     var fullName : String
@@ -31,9 +33,4 @@ struct DoctorM: Equatable, Codable{
 }
 
 
-struct DepartmentModel : Equatable , Codable {
-    var department : String
-    var Doctorid : String
-    var speciality : String
-    
-}
+

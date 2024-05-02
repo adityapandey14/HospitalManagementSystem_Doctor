@@ -116,28 +116,52 @@ class DoctorViewModel: ObservableObject {
     // This function is now marked with 'async' since it performs an asynchronous operation
     func updateDepartment(department: String, speciality: String, cabinNo: String) async throws {
         let db = Firestore.firestore()
-        
+
         // Get the current user ID
         guard let userId = Auth.auth().currentUser?.uid else {
             print("User not authenticated")
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
         }
-        
-        // Data to add to the Firestore document
+
+        // Convert department to lowercase
+        let departmentLower = department.lowercased()
+
+        // Data to be used in Firestore document
         let data: [String: Any] = [
-            "department": department,
+            "department": departmentLower,
             "speciality": speciality,
             "cabinNo": cabinNo,
             "doctorId": userId
         ]
-        
+
         do {
-            // Add a new document to the "department" collection
-            let _ = try await db.collection("department").addDocument(data: data)
-            print("Department added successfully")
+            // Query the subcollection to check if a document with the same doctorId already exists
+            let querySnapshot = try await db.collection("department")
+                                           .document(departmentLower)
+                                           .collection("allSpecialisation")
+                                           .whereField("doctorId", isEqualTo: userId)
+                                           .getDocuments()
+
+            if let existingDocument = querySnapshot.documents.first {
+                // If a document with the doctorId exists, update it with new data
+                try await db.collection("department")
+                            .document(departmentLower)
+                            .collection("allSpecialisation")
+                            .document(existingDocument.documentID)
+                            .updateData(data)
+                print("Department updated successfully")
+            } else {
+                // If no document with the doctorId exists, create a new one
+                try await db.collection("department")
+                            .document(departmentLower)
+                            .collection("allSpecialisation")
+                            .addDocument(data: data)
+                print("Department created successfully")
+            }
+
         } catch {
-            print("Error adding document: \(error.localizedDescription)")
-            throw error  // Re-throw the error for handling at a higher level
+            print("Error updating or creating document: \(error.localizedDescription)")
+            throw error  // Re-throw the error for higher-level handling
         }
     }
 
