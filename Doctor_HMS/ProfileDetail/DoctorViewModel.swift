@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseAuth
 
 class DoctorViewModel: ObservableObject {
    
@@ -27,6 +28,7 @@ class DoctorViewModel: ObservableObject {
         cabinNo: "",
         profilephoto: nil
     )
+    
     private let db = Firestore.firestore()
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -109,10 +111,37 @@ class DoctorViewModel: ObservableObject {
         }
     }
     
-    
+  
+
+    // This function is now marked with 'async' since it performs an asynchronous operation
+    func updateDepartment(department: String, speciality: String, cabinNo: String) async throws {
+        let db = Firestore.firestore()
+        
+        // Get the current user ID
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("User not authenticated")
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+        }
+        
+        // Data to add to the Firestore document
+        let data: [String: Any] = [
+            "department": department,
+            "speciality": speciality,
+            "cabinNo": cabinNo,
+            "doctorId": userId
+        ]
+        
+        do {
+            // Add a new document to the "department" collection
+            let _ = try await db.collection("department").addDocument(data: data)
+            print("Department added successfully")
+        } catch {
+            print("Error adding document: \(error.localizedDescription)")
+            throw error  // Re-throw the error for handling at a higher level
+        }
+    }
 
 
-    
-   
+
 
 }

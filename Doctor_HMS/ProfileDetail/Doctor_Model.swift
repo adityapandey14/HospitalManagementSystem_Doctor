@@ -31,4 +31,9 @@ struct DoctorM: Equatable, Codable{
 }
 
 
-
+struct DepartmentModel : Equatable , Codable {
+    var department : String
+    var Doctorid : String
+    var speciality : String
+    
+}

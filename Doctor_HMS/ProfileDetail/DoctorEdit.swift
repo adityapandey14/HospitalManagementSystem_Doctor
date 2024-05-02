@@ -109,6 +109,18 @@ struct Profile_Edit: View {
                         ) {
                             print("Profile updated successfully")
                         }
+                        do {
+                                              // Call the async method with await
+                                              try await profileViewModel.updateDepartment(
+                                                  department: profileViewModel.currentProfile.department,
+                                                  speciality: profileViewModel.currentProfile.speciality,
+                                                  cabinNo: profileViewModel.currentProfile.cabinNo
+                                              )
+                                              print("Department updated successfully")
+                                          } catch {
+                                              print("Error updating department: \(error.localizedDescription)")
+                                          } // End of catch block
+                        
                     }
                     presentationMode.wrappedValue.dismiss()
                 }) {
