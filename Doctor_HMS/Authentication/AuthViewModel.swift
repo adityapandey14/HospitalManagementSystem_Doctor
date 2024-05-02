@@ -67,23 +67,14 @@ class AuthViewModel: ObservableObject {
             return !querySnapshot.documents.isEmpty
         }
     
-    func createUser(withEmail email : String , password: String , fullName: String , code : String ) async throws {
-        
-       
+    func createUser(withEmail email : String , password: String , fullName: String ) async throws {
         do {
-            
-            let isCodeAvailable = try await checkCode(code: code)
-            guard isCodeAvailable else {
-                throw AuthError.CodeIsNotCorrect
-            }
-            
-            
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             let user = User(id: result.user.uid , fullName: fullName, email: email)
             // here user store data which you can't store directly on the firebase you have to store in form of json like raw data format with key value pair
             let encodedUser = try Firestore.Encoder().encode(user)
-            try await Firestore.firestore().collection("doctor").document(user.id).setData(encodedUser)
+            try await Firestore.firestore().collection("patient").document(user.id).setData(encodedUser)
             
             //This is how we got information uploaded to firebase
             //first we go to firestore.firestore then collection there we got user then we create document using user id then set all the data of the user
@@ -93,8 +84,6 @@ class AuthViewModel: ObservableObject {
         } catch {
             print("DEBUG: Failed to create user with error \(error.localizedDescription)")
         }
-        
-        
     }
     
     
