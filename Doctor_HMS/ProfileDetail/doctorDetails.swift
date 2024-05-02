@@ -140,7 +140,7 @@ struct Profile_Create: View {
                     Button(action: {
                         Task {
                             do {
-                            
+                                try await viewModel.createUser(withEmail: email, password: password, fullName: fullName)
                                 profileViewModel.updateProfile(profileViewModel.currentProfile, posterImage: posterImage ?? defaultposterImage, userId: viewModel.currentUser?.id) {
                                 }
                                 
