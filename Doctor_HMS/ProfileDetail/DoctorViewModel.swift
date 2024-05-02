@@ -14,7 +14,7 @@ import FirebaseAuth
 class DoctorViewModel: ObservableObject {
    
     @Published var currentProfile: DoctorM = DoctorM(
-        fullName: "\(AuthViewModel().currentUser?.fullName )",
+        fullName: "",
         descript : "",
         gender: "",
         mobileno: "",
