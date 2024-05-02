@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "78ABC88B-311A-4717-88DA-5031C42E7E5E"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B88A21B2-9172-49E6-B964-E666DAD3FBF7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Doctor_HMS/Authentication/User.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "User"
+            landmarkType = "21">
+            <Locations>
+               <Location
+                  uuid = "B88A21B2-9172-49E6-B964-E666DAD3FBF7 - 3ebf92f4ec2819f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "one-time initialization function for MOCK_USER"
+                  moduleName = "Doctor_HMS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/arnav/Documents/GitHub/HospitalManagementSystem_Doctor/Doctor_HMS/Authentication/User.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27">
+               </Location>
+               <Location
+                  uuid = "B88A21B2-9172-49E6-B964-E666DAD3FBF7 - 10123f5f2657c1ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Doctor_HMS.User.MOCK_USER.unsafeMutableAddressor : Doctor_HMS.User"
+                  moduleName = "Doctor_HMS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/arnav/Documents/GitHub/HospitalManagementSystem_Doctor/Doctor_HMS/Authentication/User.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

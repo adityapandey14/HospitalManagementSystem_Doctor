@@ -15,7 +15,6 @@ struct Profile_Create: View {
     @State private var navigationLinkIsActive = false
     let email:String
     let password:String
-    let fullName:String
     @State private var isImagePickerP = false
     @State private var isImagePickerPresented = false
     @State private var posterImage : UIImage?
@@ -70,7 +69,13 @@ struct Profile_Create: View {
                 VStack{
                     
                         
-                        
+                    HStack {
+                        TextField("Full Name", text: $profileViewModel.currentProfile.fullName)
+                            .keyboardType(.numberPad)
+                            .underlineTextField()
+                            
+                    }
+                    .padding(.bottom, 15.0)
                     HStack {
                         TextField("Enter Mobile Number", text: $profileViewModel.currentProfile.mobileno)
                             .keyboardType(.numberPad)
@@ -140,7 +145,7 @@ struct Profile_Create: View {
                     Button(action: {
                         Task {
                             do {
-                                try await viewModel.createUser(withEmail: email, password: password, fullName: fullName)
+                                try await viewModel.createUser(withEmail: email, password: password)
                                 profileViewModel.updateProfile(profileViewModel.currentProfile, posterImage: posterImage ?? defaultposterImage, userId: viewModel.currentUser?.id) {
                                 }
                                 
@@ -162,13 +167,6 @@ struct Profile_Create: View {
                             .background(Color.midNightExpress)
                             .cornerRadius(10)
                     }
-                    .background(
-                    NavigationLink(
-                            destination: Homepage(),
-                            isActive: $navigationLinkIsActive,
-                            label: { EmptyView() }
-                        )
-                    )
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -180,7 +178,7 @@ struct Profile_Create: View {
 
 struct Profile_Create_Previews: PreviewProvider {
     static var previews: some View {
-        Profile_Create(email: "", password: "", fullName: "")
+        Profile_Create(email: "", password: "")
             .environmentObject(AuthViewModel())
             .environmentObject(DoctorViewModel())
     }

@@ -44,15 +44,6 @@ struct signUpView: View {
                     }
                     .listRowBackground(Color.clear)
                     
-                    VStack(alignment: .leading){
-//                        Text("Full Name")
-//                            .font(AppFont.mediumReg)
-                        TextField("Full name", text: $fullName)
-                            .cornerRadius(8)
-                            .underlineTextField()
-                    }
-                    .padding(.top)
-                    .listRowBackground(Color.clear)
                     
                     VStack(alignment: .leading){
 //                        Text("Password")
@@ -109,20 +100,18 @@ struct signUpView: View {
                 
                 //button
                 Button(action: signUp) {
-                                Text("Sign up")
-                                .foregroundColor(.white)
-                                .frame(width: 325, height: 50)
-                                .background(Color.midNightExpress)
-                                .cornerRadius(10)
-                    
-                        .sheet(isPresented: $isSignUpSuccessful) {
-                            if isSignUpSuccessful {
-                                Profile_Create(email: email, password: password, fullName: fullName)
-                            }
-                        }
-                      
-                    
+                    Text("Sign up")
+                        .foregroundColor(.white)
+                        .frame(width: 325, height: 50)
+                        .background(Color.midNightExpress)
+                        .cornerRadius(10)
                 }
+                .background(
+                    NavigationLink(destination: Profile_Create(email: email, password: password), isActive: $isSignUpSuccessful) {
+                        EmptyView()
+                    }
+                    .opacity(0)
+                )
                 .disabled(!FormIsValid)
                 .opacity(FormIsValid ? 1.0 : 0.5)
               
@@ -150,12 +139,12 @@ struct signUpView: View {
     
     private func signUp() {
         Task {
-            if try await viewModel.checkCode(code: code)==true {
+            if let result = try? await viewModel.checkCode(code: code), result == true {
                 isSignUpSuccessful = true
             }
         }
-       
     }
+
 }
 
 extension signUpView: AuthenticationFormProtocol {
@@ -165,7 +154,6 @@ extension signUpView: AuthenticationFormProtocol {
             && !password.isEmpty
             && password.count > 5
             && password == confirmPassword
-            && !fullName.isEmpty
     }
 }
 
