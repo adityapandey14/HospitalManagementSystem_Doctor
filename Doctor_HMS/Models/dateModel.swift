@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct DayDateInfo {
     let date: String
     let day: String

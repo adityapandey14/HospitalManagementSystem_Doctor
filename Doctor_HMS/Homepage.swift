@@ -17,6 +17,26 @@ struct Homepage: View {
     @State var dayDate: [DayDateInfo] = []
     @State var selectedDateIndex:Int = 0
     
+
+    
+    // Sample appointments
+        let sampleAppointments: [Appointment] = [
+            Appointment(date: Date(), patientName: "John Doe", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
+            Appointment(date: Date().addingTimeInterval(3600), patientName: "Jane Smith", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
+            Appointment(date: Date().addingTimeInterval(7200), patientName: "Alice Johnson", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
+            Appointment(date: Date().addingTimeInterval(10800), patientName: "Bob Brown", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
+            // Add more sample appointments as needed
+        ]
+        
+    var selectedDate: Date {
+        return Calendar.current.date(byAdding: .day, value: selectedDateIndex, to: todayDate)!
+    }
+        
+    var appointmentsForSelectedDate: [Appointment] {
+        return sampleAppointments.filter { Calendar.current.isDate($0.date, inSameDayAs: selectedDate) }
+    }
+
+    
     var body: some View {
         //        HStack {
         //            Spacer()
@@ -32,82 +52,99 @@ struct Homepage: View {
         //
         //        }
         
-        VStack{
-            
-            //profile image bar.
-            HStack{
-                Image("userimage")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 60)
-                    .clipShape(Circle())
+        NavigationStack{
+            VStack{
                 
-                Spacer()
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Text(currentDateMonth)
-                        .foregroundStyle(Color.primary)
-                        .font(.custom("", size: 18))
+                //profile image bar.
+                HStack{
+                    Image("userimage")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60)
+                        .clipShape(Circle())
                     
-                })
-                Spacer()
-                Image(systemName: "square.and.pencil")
-                    .font(.title2)
-                //                    .fontWeight(.regular)
-                    .padding(14)
-                    .background(Color(uiColor: .secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                
-            }
-            .padding(.horizontal, 25)
-            
-            
-            //good mornign and texts.
-            HStack{
-                VStack(alignment: .leading, spacing: 10){
-                    Text("Good Morning Dr. Smith")
-                        .font(.system(size: 22))
-                    
-                    Text("You have \(todayPatientNos) Patients Today")
-                        .font(.system(size: 22))
-                    //                        .fontWeight(.medium)
-                        .foregroundStyle(Color("paleBlue"))
+                    Spacer()
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Text(currentDateMonth)
+                            .foregroundStyle(Color.primary)
+                            .font(.custom("", size: 18))
+                        
+                    })
+                    Spacer()
+                    Image(systemName: "square.and.pencil")
+                        .font(.title2)
+                        .padding(14)
+                        .background(Color(uiColor: .secondarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     
                 }
-                .padding(.top, 40)
+                .padding(.horizontal, 25)
                 
-                Spacer()
-            }
-            .padding(.horizontal, 25)
-            
-            
-            //dates of the week
-        }
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 20) {
-                ForEach(dayDate.indices, id: \.self) { index in
-                    DateView(dateInfo: dayDate[index], isSelected: selectedDateIndex == index) {
-                        if selectedDateIndex == index {
-                            selectedDateIndex = index
-                        } else {
-                            selectedDateIndex = index
+                
+                //good mornign and texts.
+                HStack{
+                    VStack(alignment: .leading, spacing: 10){
+                        Text("Good Morning Dr. Smith")
+                            .font(.system(size: 22))
+                        
+                        Text("You have \(todayPatientNos) Patients Today")
+                            .font(.system(size: 22))
+                            .foregroundStyle(Color("paleBlue"))
+                        
+                    }
+                    .padding(.top, 40)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 25)
+                
+                
+                //date show for 7 days
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 20) {
+                        ForEach(dayDate.indices, id: \.self) { index in
+                            DateView(dateInfo: dayDate[index], isSelected: selectedDateIndex == index) {
+                                if selectedDateIndex == index {
+                                    selectedDateIndex = index
+                                } else {
+                                    selectedDateIndex = index
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                }
+                
+                
+                ScrollView {
+                    LazyVStack(spacing: 20) {
+                        ForEach(appointmentsForSelectedDate) { appointment in
+
+                            HStack(alignment: .top){
+                                Text("\(formattedTimeString(from: appointment.date))")
+                                    .font(.system(size: 15))
+                                    .padding(.top, 15)
+                                Spacer()
+                                AppointmentCard(appointment: appointment)
+                            }
                         }
                     }
                 }
+                .padding(.horizontal, 25)
+                
+                
+                
             }
-            .padding()
-            
-            
+            .onAppear {
+                let date = Date()
+                
+                var dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM, YYYY"
+                self.currentDateMonth = dateFormatter.string(from: date)
+                
+                getDaysOfWeek()
+            }
         }
-        .onAppear {
-            let date = Date()
-            
-            var dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMM, YYYY"
-            self.currentDateMonth = dateFormatter.string(from: date)
-            
-            getDaysOfWeek()
-        }
-        
         
     }
     
@@ -132,6 +169,13 @@ struct Homepage: View {
                 self.dayDate.append(dayDateInfo)
             }
         }
+    }
+    
+    //for time on left side of appointment cards
+    private func formattedTimeString(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
+        return dateFormatter.string(from: date)
     }
     
     
@@ -175,3 +219,50 @@ struct DateView: View {
     }
 }
 
+
+//MARK: struct for apppointment card
+struct AppointmentCard: View {
+    let appointment: Appointment
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+//            Text("Patient: \(appointment.patientName)")
+//                .font(.headline)
+//            Text("Time: \(formattedTimeString(from: appointment.date))")
+//                .font(.subheadline)
+            
+            VStack(alignment: .leading, spacing: 3){
+                Text(appointment.patientName)
+                    .font(.system(size: 18))
+                
+                Text("21 yo")
+                    .font(.system(size: 14))
+                    .foregroundStyle(Color(uiColor: .secondaryLabel))
+            }
+            
+            Text(appointment.appointmentDetail)
+                .font(.system(size: 14))
+                .foregroundStyle(Color(uiColor: .secondaryLabel))
+            
+            NavigationLink(destination: PatientDetailsView(patientName: appointment.patientName)) {
+                Text("View more Details")
+                    .font(.system(size: 15))
+                    .fontWeight(.medium)
+                    .foregroundStyle(Color("paleBlue"))
+            }
+
+            
+        }
+        .padding(13)
+        .padding(.bottom, 4)
+        .background(Color(uiColor: .secondarySystemBackground))
+        .cornerRadius(20)
+        .frame(width: 260)
+    }
+    
+//    private func formattedTimeString(from date: Date) -> String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "h:mm a"
+//        return dateFormatter.string(from: date)
+//    }
+}
