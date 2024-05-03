@@ -12,8 +12,6 @@ struct Homepage: View {
     @State var currentDateMonth : String = ""
     @State var todayDate : Date = Date()
     
-    let todayPatientNos:Int = 03
-    
     @State var dayDate: [DayDateInfo] = []
     @State var selectedDateIndex:Int = 0
     
@@ -35,6 +33,11 @@ struct Homepage: View {
     var appointmentsForSelectedDate: [Appointment] {
         return sampleAppointments.filter { Calendar.current.isDate($0.date, inSameDayAs: selectedDate) }
     }
+    
+    var numberOfPatientsToday: Int {
+            let appointmentsForDate = sampleAppointments.filter { Calendar.current.isDate($0.date, inSameDayAs: selectedDate) }
+            return appointmentsForDate.count
+        }
 
     
     var body: some View {
@@ -87,7 +90,7 @@ struct Homepage: View {
                         Text("Good Morning Dr. Smith")
                             .font(.system(size: 22))
                         
-                        Text("You have \(todayPatientNos) Patients Today")
+                        Text("You have \(numberOfPatientsToday) Patients Today")
                             .font(.system(size: 22))
                             .foregroundStyle(Color("paleBlue"))
                         
