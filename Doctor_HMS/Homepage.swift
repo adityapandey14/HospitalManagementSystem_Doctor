@@ -21,8 +21,8 @@ struct Homepage: View {
         let sampleAppointments: [Appointment] = [
             Appointment(date: Date(), patientName: "John Doe", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
             Appointment(date: Date().addingTimeInterval(3600), patientName: "Jane Smith", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
-            Appointment(date: Date().addingTimeInterval(7200), patientName: "Alice Johnson", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
-            Appointment(date: Date().addingTimeInterval(10800), patientName: "Bob Brown", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
+//            Appointment(date: Date().addingTimeInterval(7200), patientName: "Alice Johnson", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
+//            Appointment(date: Date().addingTimeInterval(10800), patientName: "Bob Brown", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
             // Add more sample appointments as needed
         ]
         
@@ -67,18 +67,19 @@ struct Homepage: View {
                         .clipShape(Circle())
                     
                     Spacer()
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Text(currentDateMonth)
-                            .foregroundStyle(Color.primary)
-                            .font(.custom("", size: 18))
-                        
-                    })
+                    Text(currentDateMonth)
+                        .foregroundStyle(Color.primary)
+                        .font(.custom("", size: 18))
                     Spacer()
-                    Image(systemName: "square.and.pencil")
-                        .font(.title2)
-                        .padding(14)
-                        .background(Color(uiColor: .secondarySystemBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    NavigationLink(destination: ManageAvailabilityView()) {
+                        Image(systemName: "square.and.pencil")
+                            .foregroundStyle(Color.primary)
+                            .font(.title2)
+                            .padding(14)
+                            .background(Color(uiColor: .secondarySystemBackground))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    
                     
                 }
                 .padding(.horizontal, 25)
