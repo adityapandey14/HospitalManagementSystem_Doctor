@@ -15,15 +15,16 @@ struct Homepage: View {
     @State var dayDate: [DayDateInfo] = []
     @State var selectedDateIndex:Int = 0
     
+    
 
     
     // Sample appointments
         let sampleAppointments: [Appointment] = [
             Appointment(date: Date(), patientName: "John Doe", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
             Appointment(date: Date().addingTimeInterval(3600), patientName: "Jane Smith", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
-//            Appointment(date: Date().addingTimeInterval(7200), patientName: "Alice Johnson", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
-//            Appointment(date: Date().addingTimeInterval(10800), patientName: "Bob Brown", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
-            // Add more sample appointments as needed
+            Appointment(date: Date().addingTimeInterval(7200), patientName: "Alice Johnson", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
+            Appointment(date: Date().addingTimeInterval(10800), patientName: "Bob Brown", appointmentDetail: "Sore throat and pain near the ears. round head hurts."),
+             //Add more sample appointments as needed
         ]
         
     var selectedDate: Date {
@@ -83,6 +84,7 @@ struct Homepage: View {
                     
                 }
                 .padding(.horizontal, 25)
+                .padding(.top)
                 
                 
                 //good mornign and texts.
@@ -142,7 +144,8 @@ struct Homepage: View {
             .onAppear {
                 let date = Date()
                 
-                var dateFormatter = DateFormatter()
+                //var dateFormatter = DateFormatter()
+                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMM, YYYY"
                 self.currentDateMonth = dateFormatter.string(from: date)
                 
@@ -248,7 +251,7 @@ struct AppointmentCard: View {
                 .font(.system(size: 14))
                 .foregroundStyle(Color(uiColor: .secondaryLabel))
             
-            NavigationLink(destination: PatientDetailsView(patientName: appointment.patientName)) {
+            NavigationLink(destination: PatientInfoView(patientName: appointment.patientName)) {
                 Text("View more Details")
                     .font(.system(size: 15))
                     .fontWeight(.medium)

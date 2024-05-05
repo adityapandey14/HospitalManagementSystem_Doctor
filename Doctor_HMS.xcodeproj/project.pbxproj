@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		13719FEE2BE4BBDA0059ED22 /* ManageAvailabilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13719FED2BE4BBDA0059ED22 /* ManageAvailabilityView.swift */; };
+		137721442BE72B5100857F25 /* PatientInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137721432BE72B5100857F25 /* PatientInfoView.swift */; };
 		139D722D2BE3A18700300EEA /* dateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D722C2BE3A18700300EEA /* dateModel.swift */; };
 		139D722F2BE3F39F00300EEA /* appointmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D722E2BE3F39F00300EEA /* appointmentModel.swift */; };
 		139D72312BE407F500300EEA /* PatientDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D72302BE407F500300EEA /* PatientDetailsView.swift */; };
@@ -65,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		13719FED2BE4BBDA0059ED22 /* ManageAvailabilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAvailabilityView.swift; sourceTree = "<group>"; };
+		137721432BE72B5100857F25 /* PatientInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientInfoView.swift; sourceTree = "<group>"; };
 		139D722C2BE3A18700300EEA /* dateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dateModel.swift; sourceTree = "<group>"; };
 		139D722E2BE3F39F00300EEA /* appointmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appointmentModel.swift; sourceTree = "<group>"; };
 		139D72302BE407F500300EEA /* PatientDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailsView.swift; sourceTree = "<group>"; };
@@ -198,6 +200,8 @@
 				DFC22C572BD268FE00B2AD68 /* Doctor_HMSApp.swift */,
 				DFC22C592BD268FE00B2AD68 /* ContentView.swift */,
 				DF6B2EC82BD597B300FAD930 /* Homepage.swift */,
+				13719FED2BE4BBDA0059ED22 /* ManageAvailabilityView.swift */,
+				137721432BE72B5100857F25 /* PatientInfoView.swift */,
 				4890D4262BE0D91500EF8750 /* HomepageComplete.swift */,
 				4890D4282BE0D95000EF8750 /* ProfileDetail */,
 				DF6B2EAE2BD58CDF00FAD930 /* Authentication */,
@@ -205,7 +209,6 @@
 				DFC22C5D2BD268FF00B2AD68 /* Doctor_HMS.entitlements */,
 				DFC22C5E2BD268FF00B2AD68 /* Preview Content */,
 				139D72302BE407F500300EEA /* PatientDetailsView.swift */,
-				13719FED2BE4BBDA0059ED22 /* ManageAvailabilityView.swift */,
 			);
 			path = Doctor_HMS;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4890D42C2BE0D99000EF8750 /* newPassword.swift in Sources */,
+				137721442BE72B5100857F25 /* PatientInfoView.swift in Sources */,
 				DFC22C5A2BD268FE00B2AD68 /* ContentView.swift in Sources */,
 				139D722D2BE3A18700300EEA /* dateModel.swift in Sources */,
 				DF6B2EBD2BD58E2A00FAD930 /* appFonts.swift in Sources */,
