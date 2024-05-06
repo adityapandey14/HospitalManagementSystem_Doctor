@@ -47,8 +47,10 @@ class PrescriptionViewModel: ObservableObject {
             // Add more prescription details as needed
         ]
         
-        db.collection("prescriptions").addDocument(data: prescriptionData)
+        // Set the document ID explicitly to patientID
+        db.collection("prescriptions").document(patientID).setData(prescriptionData)
     }
+
 
 
 }
