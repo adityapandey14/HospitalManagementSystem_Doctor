@@ -21,7 +21,14 @@ struct HomepageComplete: View {
 //                    Label("Appointment", systemImage: "person.crop.rectangle.fill")
 //                        .padding(.top)
 //                }
-//        
+            
+            
+            appointView()
+                .tabItem {
+                    Label("appointView", systemImage: "folder.fill")
+                        .padding(.top)
+                }
+//
             Profile_Edit()
                 .tabItem {
                     Label("ProfileEdit", systemImage: "folder.fill")
