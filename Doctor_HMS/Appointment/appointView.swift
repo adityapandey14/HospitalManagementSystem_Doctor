@@ -99,12 +99,27 @@ class AppointmentViewModel: ObservableObject {
 struct AppointmentListView: View {
     @ObservedObject var viewModel = AppointmentViewModel()
     let currentUserID: String // This will be the current user's UID
+    @State private var selectedDate = Date()
+
+    
+    // Computed property to convert the date to a string in a specific format
+    var formattedSelectedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy" // Ensure this matches Firestore format
+        return dateFormatter.string(from: selectedDate)
+    }
+
 
     var body: some View {
         NavigationView {
+            
+          
             List {
+                DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
+                    .datePickerStyle(CompactDatePickerStyle())
+                    .padding()
                 // Display the appointments for the current user
-                ForEach(viewModel.appointments.filter { $0.doctorID == currentUserID }) { appointment in
+                ForEach(viewModel.appointments.filter { $0.doctorID == currentUserID && $0.date == selectedDate.formatted(date: .numeric, time: .omitted)}) { appointment in
                     VStack(alignment: .leading) {
                         Text("Date: \(appointment.date)")
                         Text("Time Slot: \(appointment.timeSlot)")
@@ -124,6 +139,7 @@ struct AppointmentListView: View {
                             Text("Delete")
                         }
                     }
+                    .padding()
                 }
             }
             .navigationTitle("My Appointments")

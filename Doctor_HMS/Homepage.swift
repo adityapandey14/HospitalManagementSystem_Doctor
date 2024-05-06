@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseAuth
 
 struct Homepage: View {
     @EnvironmentObject var viewModel : AuthViewModel
@@ -14,6 +16,11 @@ struct Homepage: View {
     
     @State var dayDate: [DayDateInfo] = []
     @State var selectedDateIndex:Int = 0
+    
+    
+   let currentUserId = Auth.auth().currentUser?.uid
+    
+    @ObservedObject var appointViewModel = AppointmentViewModel()
     
     
 
@@ -133,7 +140,7 @@ struct Homepage: View {
                                 Spacer()
                                 AppointmentCard(appointment: appointment)
                             }
-                        }
+                        }  //End of for loop
                     }
                 }
                 .padding(.horizontal, 25)
