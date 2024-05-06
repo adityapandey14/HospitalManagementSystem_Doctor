@@ -54,7 +54,7 @@ class AppointmentViewModel: ObservableObject {
                 )
             }
         }
-    }
+    } //fetchAppointments
     
     
     func deleteAppointment(appointmentId: String) {
@@ -72,8 +72,8 @@ class AppointmentViewModel: ObservableObject {
 
             // Check if the document exists and if the current user is the owner
             if let data = document?.data(),
-               let patientId = data["PatientID"] as? String,
-               patientId == currentUserId {
+               let doctorId = data["DoctorID"] as? String,
+               doctorId == currentUserId {
                 // If the current user is the owner of the appointment, delete it
                 self?.db.collection("appointments").document(appointmentId).delete { error in
                     if let error = error {
@@ -89,6 +89,43 @@ class AppointmentViewModel: ObservableObject {
             }
         }
     } //End of the function
+    
+    
+    func markAppointmentAsComplete(appointmentId: String) {
+        // Ensure currentUserId is not nil before proceeding
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            errorMessage = "Unable to identify current user. Please log in again."
+            return
+        }
+
+        db.collection("appointments").document(appointmentId).getDocument { [weak self] (document, error) in
+            if let error = error {
+                self?.errorMessage = "Error fetching appointment: \(error.localizedDescription)"
+                return
+            }
+
+            // Check if the document exists and if the current user is the owner
+            if let data = document?.data(),
+               let doctorId = data["DoctorID"] as? String,
+               doctorId == currentUserId {
+                // If the current user is the owner of the appointment, update the isComplete field to true
+                self?.db.collection("appointments").document(appointmentId).updateData(["isComplete": true]) { error in
+                    if let error = error {
+                        self?.errorMessage = "Error updating appointment: \(error.localizedDescription)"
+                    } else {
+                        // Update the local state
+                        if let index = self?.appointments.firstIndex(where: { $0.id == appointmentId }) {
+                            self?.appointments[index].isComplete = true
+                        }
+                    }
+                }
+            } else {
+                // If the user doesn't own the appointment, set an error message
+                self?.errorMessage = "You do not have permission to update this appointment"
+            }
+        }
+    } //mark appointment completed
+
 
 }
 
@@ -102,12 +139,7 @@ struct AppointmentListView: View {
     @State private var selectedDate = Date()
 
     
-    // Computed property to convert the date to a string in a specific format
-    var formattedSelectedDate: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy" // Ensure this matches Firestore format
-        return dateFormatter.string(from: selectedDate)
-    }
+
 
 
     var body: some View {
@@ -119,7 +151,10 @@ struct AppointmentListView: View {
                     .datePickerStyle(CompactDatePickerStyle())
                     .padding()
                 // Display the appointments for the current user
+            
                 ForEach(viewModel.appointments.filter { $0.doctorID == currentUserID && $0.date == selectedDate.formatted(date: .numeric, time: .omitted)}) { appointment in
+                    
+                    
                     VStack(alignment: .leading) {
                         Text("Date: \(appointment.date)")
                         Text("Time Slot: \(appointment.timeSlot)")
@@ -127,16 +162,29 @@ struct AppointmentListView: View {
                         Text("Reason: \(appointment.reason)")
                         if appointment.isComplete {
                             Text("Status: Complete")
+                            
                                 .foregroundColor(.green)
                         } else {
                             Text("Status: Incomplete")
                                 .foregroundColor(.red)
                         }
-                        
-                        Button{
-                            viewModel.deleteAppointment(appointmentId: appointment.id)
-                        } label : {
-                            Text("Delete")
+                        HStack {
+                            Button{
+                                viewModel.deleteAppointment(appointmentId: appointment.id)
+                                
+                            } label : {
+                                Text("Delete")
+                            }
+                            
+                            Spacer()
+                            
+                            
+                            Button{
+                               viewModel.markAppointmentAsComplete(appointmentId: appointment.id)
+                              
+                            } label : {
+                                Text("completed")
+                            }
                         }
                     }
                     .padding()

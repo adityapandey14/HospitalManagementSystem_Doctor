@@ -49,19 +49,7 @@ struct Homepage: View {
 
     
     var body: some View {
-        //        HStack {
-        //            Spacer()
-        //            Button(action: {
-        //                viewModel.signOut()
-        //            }) {
-        //                Image(systemName: "gear")
-        //                    .resizable()
-        //                    .frame(width: 30, height: 30)
-        //                    .foregroundColor(Color.blue)
-        //            }
-        //            .padding(.all, 10)
-        //
-        //        }
+
         
         NavigationStack{
             VStack{
@@ -119,6 +107,7 @@ struct Homepage: View {
                             DateView(dateInfo: dayDate[index], isSelected: selectedDateIndex == index) {
                                 if selectedDateIndex == index {
                                     selectedDateIndex = index
+                                    
                                 } else {
                                     selectedDateIndex = index
                                 }
@@ -128,17 +117,20 @@ struct Homepage: View {
                     .padding()
                 }
                 
-                
+               
                 ScrollView {
                     LazyVStack(spacing: 20) {
-                        ForEach(appointmentsForSelectedDate) { appointment in
+                        ForEach(appointViewModel.appointments.filter { $0.doctorID == currentUserId && $0.date == Date().formatted(date: .numeric, time: .omitted)}) { appointment in
 
                             HStack(alignment: .top){
-                                Text("\(formattedTimeString(from: appointment.date))")
-                                    .font(.system(size: 15))
-                                    .padding(.top, 15)
-                                Spacer()
+//                                Text("\(formattedTimeString(from: appointment.date))")
+//                                    .font(.system(size: 15))
+//                                    .padding(.top, 15)
+//                                Spacer()
+                                Text(appointment.patientID)
+                                    .padding()
                                 AppointmentCard(appointment: appointment)
+                                
                             }
                         }  //End of for loop
                     }
@@ -236,7 +228,7 @@ struct DateView: View {
 
 //MARK: struct for apppointment card
 struct AppointmentCard: View {
-    let appointment: Appointment
+    let appointment: AppointmentModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -246,7 +238,7 @@ struct AppointmentCard: View {
 //                .font(.subheadline)
             
             VStack(alignment: .leading, spacing: 3){
-                Text(appointment.patientName)
+                Text(appointment.patientID)
                     .font(.system(size: 18))
                 
                 Text("21 yo")
@@ -254,16 +246,16 @@ struct AppointmentCard: View {
                     .foregroundStyle(Color(uiColor: .secondaryLabel))
             }
             
-            Text(appointment.appointmentDetail)
+            Text(appointment.reason)
                 .font(.system(size: 14))
                 .foregroundStyle(Color(uiColor: .secondaryLabel))
             
-            NavigationLink(destination: PatientInfoView(patientName: appointment.patientName)) {
-                Text("View more Details")
-                    .font(.system(size: 15))
-                    .fontWeight(.medium)
-                    .foregroundStyle(Color("paleBlue"))
-            }
+//            NavigationLink(destination: PatientInfoView(patientName: appointment.patientName)) {
+//                Text("View more Details")
+//                    .font(.system(size: 15))
+//                    .fontWeight(.medium)
+//                    .foregroundStyle(Color("paleBlue"))
+//            }
 
             
         }
