@@ -158,7 +158,7 @@ struct AppointmentListView: View {
                     VStack(alignment: .leading) {
                         Text("Date: \(appointment.date)")
                         Text("Time Slot: \(appointment.timeSlot)")
-                        Text("Doctor ID: \(appointment.doctorID)")
+                        Text("Patient ID: \(appointment.patientID)")
                         Text("Reason: \(appointment.reason)")
                         if appointment.isComplete {
                             Text("Status: Complete")
