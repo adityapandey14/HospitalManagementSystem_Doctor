@@ -132,6 +132,7 @@ struct EditButtonView: View {
 
 struct ProfileButtonsView: View {
     @Binding var navigateToNewPassword: Bool
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         ZStack {
@@ -153,8 +154,24 @@ struct ProfileButtonsView: View {
                     }
                     .padding(.top, 60)
                 }
+                Button(action: {
+                                    viewModel.signOut() // Call the logout function
+                }) {
+                    HStack {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                            .foregroundColor(Color.red)
+                            .offset(x: -85)
+                            .offset(y: 4)
+                        Text("Logout")
+                            .foregroundColor(Color.red)
+                            .bold()
+                            .offset(x: -73)
+                            .offset(y: 4)
+                    }
+                    .padding(.top, 20)
+                }
                 
-                // Other buttons...
+       
             }
         }
     }
