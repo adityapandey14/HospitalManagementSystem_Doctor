@@ -168,24 +168,24 @@ struct AppointmentListView: View {
                             Text("Status: Incomplete")
                                 .foregroundColor(.red)
                         }
-                        HStack {
-                            Button{
-                                viewModel.deleteAppointment(appointmentId: appointment.id)
-                                
-                            } label : {
-                                Text("Delete")
-                            }
-                            
-                            Spacer()
-                            
-                            
-                            Button{
-                               viewModel.markAppointmentAsComplete(appointmentId: appointment.id)
-                              
-                            } label : {
-                                Text("completed")
-                            }
-                        }
+//                        HStack {
+//                            Button{
+//                                viewModel.deleteAppointment(appointmentId: appointment.id)
+//                                
+//                            } label : {
+//                                Text("Delete")
+//                            }
+//                            
+//                            Spacer()
+//                            
+//                            
+//                            Button{
+//                               viewModel.markAppointmentAsComplete(appointmentId: appointment.id)
+//                              
+//                            } label : {
+//                                Text("completed")
+//                            }
+//                        }
                     }
                     .padding()
                 }

@@ -15,6 +15,7 @@
 		4762BFC02BE8A19B00845B96 /* Prescription_Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4762BFBF2BE8A19B00845B96 /* Prescription_Model.swift */; };
 		4762BFC22BE8A1B600845B96 /* Prescription_Viewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4762BFC12BE8A1B600845B96 /* Prescription_Viewmodel.swift */; };
 		4762BFC42BE8A1FD00845B96 /* Presc_Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4762BFC32BE8A1FD00845B96 /* Presc_Input.swift */; };
+		4762BFEA2BEA37C100845B96 /* AnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4762BFE92BEA37C100845B96 /* AnnouncementView.swift */; };
 		48806FFC2BE4B760006CF917 /* appointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48806FFB2BE4B75F006CF917 /* appointView.swift */; };
 		4890D4272BE0D91500EF8750 /* HomepageComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4262BE0D91500EF8750 /* HomepageComplete.swift */; };
 		4890D42A2BE0D96E00EF8750 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4292BE0D96E00EF8750 /* ProfilePage.swift */; };
@@ -79,6 +80,7 @@
 		4762BFBF2BE8A19B00845B96 /* Prescription_Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prescription_Model.swift; sourceTree = "<group>"; };
 		4762BFC12BE8A1B600845B96 /* Prescription_Viewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prescription_Viewmodel.swift; sourceTree = "<group>"; };
 		4762BFC32BE8A1FD00845B96 /* Presc_Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presc_Input.swift; sourceTree = "<group>"; };
+		4762BFE92BEA37C100845B96 /* AnnouncementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementView.swift; sourceTree = "<group>"; };
 		48806FFB2BE4B75F006CF917 /* appointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appointView.swift; sourceTree = "<group>"; };
 		4890D4262BE0D91500EF8750 /* HomepageComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageComplete.swift; sourceTree = "<group>"; };
 		4890D4292BE0D96E00EF8750 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
@@ -165,6 +167,14 @@
 			path = "Prescription Upload";
 			sourceTree = "<group>";
 		};
+		4762BFE82BEA37AB00845B96 /* Announcement */ = {
+			isa = PBXGroup;
+			children = (
+				4762BFE92BEA37C100845B96 /* AnnouncementView.swift */,
+			);
+			path = Announcement;
+			sourceTree = "<group>";
+		};
 		48806FFA2BE4B700006CF917 /* Appointment */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +250,7 @@
 		DFC22C562BD268FE00B2AD68 /* Doctor_HMS */ = {
 			isa = PBXGroup;
 			children = (
+				4762BFE82BEA37AB00845B96 /* Announcement */,
 				4762BFBE2BE8A11400845B96 /* Prescription Upload */,
 				139D722B2BE3A16F00300EEA /* Models */,
 				DFC22C842BD2698F00B2AD68 /* GoogleService-Info.plist */,
@@ -465,6 +476,7 @@
 				DF6B2EC92BD597B300FAD930 /* Homepage.swift in Sources */,
 				DFC22C582BD268FE00B2AD68 /* Doctor_HMSApp.swift in Sources */,
 				48EB950D2BE8BF060076DFE4 /* DoctorListView.swift in Sources */,
+				4762BFEA2BEA37C100845B96 /* AnnouncementView.swift in Sources */,
 				4890D4322BE0DAB800EF8750 /* ImagePicker.swift in Sources */,
 				4890D4272BE0D91500EF8750 /* HomepageComplete.swift in Sources */,
 				48EB950A2BE889A50076DFE4 /* PatientDetails.swift in Sources */,
