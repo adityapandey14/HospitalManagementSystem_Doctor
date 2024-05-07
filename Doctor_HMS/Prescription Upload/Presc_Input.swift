@@ -58,10 +58,19 @@ struct MedicineInputView: View {
     @Binding var medicine: MedicineInput
     
     var body: some View {
-        VStack {
+        HStack {
             TextField("Medicine Name", text: $medicine.name)
+                .background(Color(uiColor: .secondarySystemBackground))
+            
             TextField("Dosage", text: $medicine.dosage)
+                .background(Color(uiColor: .secondarySystemBackground))
+
         }
+        .padding()
+        .background(Color(uiColor: .secondarySystemBackground))
+        .cornerRadius(10)
+
+
     }
 }
 
