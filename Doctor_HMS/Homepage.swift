@@ -71,8 +71,9 @@ struct Homepage: View {
                         .foregroundColor(Color.primary)
                         .font(.custom("", size: 18))
                     Spacer()
-                    NavigationLink(destination: ManageAvailabilityView()) {
-                        Image(systemName: "square.and.pencil")
+//                    NavigationLink(destination: ManageAvailabilityView()) {
+                    NavigationLink(destination: AnnouncementsView()) {
+                        Image(systemName: "bell.badge")
                             .foregroundColor(Color.primary)
                             .font(.title2)
                             .padding(14)

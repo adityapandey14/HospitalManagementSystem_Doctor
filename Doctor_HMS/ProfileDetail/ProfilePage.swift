@@ -198,15 +198,10 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // Profile content
                 HStack {
-                    // Profile image
                     ProfileImageView()
-                    
-                    // Profile details
                     ProfileDetailsView()
-                    
-                    // Edit button
+                    Spacer()
                     EditButtonView(isEditSuccessful: $isEditSuccessful)
                 }
                 .padding(.top, 15)
@@ -234,7 +229,7 @@ struct ProfileImageView: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 60, height: 60)
+                        .frame(width: 80, height: 80)
                         .clipShape(Circle())
                 default:
                     ProgressView()
@@ -242,10 +237,10 @@ struct ProfileImageView: View {
                 }
             }
         } else {
-            Image(uiImage: UIImage(named: "default_hackathon_poster")!)
+            Image(uiImage: UIImage(named: "profilePictureDefault")!)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 100)
+                .frame(width: 80, height: 80)
                 .clipShape(Circle())
         }
     }
@@ -258,12 +253,12 @@ struct ProfileDetailsView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(profileViewModel.currentProfile.fullName)
-                .font(.title)
-                .bold()
+                .font(.title2)
+//                .bold()
             Text(viewModel.currentUser?.email ?? "email")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-            Text(profileViewModel.currentProfile.mobileno)
+            Text("mobile: \(profileViewModel.currentProfile.mobileno)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -275,12 +270,11 @@ struct EditButtonView: View {
     @Binding var isEditSuccessful: Bool
     
     var body: some View {
-        Spacer()
         Button(action: { isEditSuccessful = true }) {
             Image(systemName: "square.and.pencil")
                 .resizable()
-                .frame(width: 20, height: 20)
-                .foregroundColor(.primary)
+                .frame(width: 30, height: 30)
+//                .foregroundColor(.primary)
         }
         .sheet(isPresented: $isEditSuccessful) {
             Profile_Edit()
