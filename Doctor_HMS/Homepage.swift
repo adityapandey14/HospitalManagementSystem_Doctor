@@ -11,7 +11,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct Homepage: View {
-    
+    @EnvironmentObject var profileViewModel: DoctorViewModel
     @EnvironmentObject var viewModel: AuthViewModel
     @State var currentDateMonth: String = {
         let dateFormatter = DateFormatter()
@@ -45,11 +45,34 @@ struct Homepage: View {
             VStack {
                 // Profile image bar.
                 HStack {
-                    Image("userimage")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 60)
-                        .clipShape(Circle())
+                    HStack {
+                        if let posterURL = profileViewModel.currentProfile.profilephoto {
+                            AsyncImage(url: URL(string: posterURL)) { phase in
+                                switch phase {
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 60, height: 60)
+                                            .cornerRadius(10.0)
+                                            .clipShape(Circle())
+                                            .padding([.leading, .bottom, .trailing])
+                                    default:
+                                            ProgressView()
+                                                .frame(width: 50, height: 50)
+                                                .padding([.leading, .bottom, .trailing])
+                                            }
+                            }
+                    } else {
+                            Image(uiImage: UIImage(named: "default_hackathon_poster")!)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 60, height: 60)
+                                .cornerRadius(10.0)
+                                .clipShape(Circle())
+                                .padding([.leading, .bottom, .trailing])
+                        }
+                    }
                     Spacer()
                     Text(currentDateMonth)
                         .foregroundColor(Color.primary)
@@ -66,12 +89,15 @@ struct Homepage: View {
                 }
                 .padding(.horizontal, 25)
                 .padding(.top)
+                .onAppear(){
+                    try? profileViewModel.fetchProfile(userId: viewModel.currentUser?.id)
+                }
+
                 
                 // Good morning and texts.
                 HStack {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Good Morning Dr. Smith")
-                            .font(.system(size: 22))
+                        Text("Good Morning " + profileViewModel.currentProfile.fullName)                            .font(.system(size: 22))
                         Text("You have \(numberOfPatientsToday) Patients Today")
                             .font(.system(size: 22))
                             .foregroundColor(Color("paleBlue"))
@@ -237,8 +263,21 @@ struct AppointmentCard: View {
 
 struct Homepage_Previews: PreviewProvider {
     static var previews: some View {
-        Homepage()
-    }
+        let profileViewModel = DoctorViewModel()
+        let viewModel = AuthViewModel()
+        let appointViewModel = AppointmentViewModel()
+
+
+        viewModel.currentUser = User(id: "1", email: "john.doe@example.com")
+
+        let dummyAppointment = AppointmentModel(id: "1", date: "", doctorID: "1", patientID: "2", timeSlot: "10:00 AM", isComplete: false, reason: "Routine checkup")
+
+        return Homepage()
+            .environmentObject(profileViewModel)
+            .environmentObject(viewModel)
+            .environment(\.locale, .init(identifier: "en_US"))
+            .environmentObject(appointViewModel)
+            .previewDisplayName("Homepage Preview")    }
 }
 
 
