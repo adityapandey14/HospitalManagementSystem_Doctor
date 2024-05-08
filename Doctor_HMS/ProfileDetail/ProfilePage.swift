@@ -198,10 +198,12 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    ProfileImageView()
-                    ProfileDetailsView()
-                    Spacer()
+                VStack(spacing: 40) {
+                    VStack(spacing: 20){
+                        ProfileImageView()
+                        ProfileDetailsView()
+                    }
+
                     EditButtonView(isEditSuccessful: $isEditSuccessful)
                 }
                 .padding(.top, 15)
@@ -229,18 +231,18 @@ struct ProfileImageView: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 80, height: 80)
+                        .frame(width: 100, height: 100)
                         .clipShape(Circle())
                 default:
                     ProgressView()
-                        .frame(width: 50, height: 50)
+                        .frame(width: 100, height: 100)
                 }
             }
         } else {
             Image(uiImage: UIImage(named: "profilePictureDefault")!)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 80, height: 80)
+                .frame(width: 100, height: 100)
                 .clipShape(Circle())
         }
     }
@@ -251,7 +253,7 @@ struct ProfileDetailsView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .center) {
             Text(profileViewModel.currentProfile.fullName)
                 .font(.title2)
 //                .bold()
@@ -262,7 +264,6 @@ struct ProfileDetailsView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
-        .padding(.leading)
     }
 }
 
@@ -271,10 +272,21 @@ struct EditButtonView: View {
     
     var body: some View {
         Button(action: { isEditSuccessful = true }) {
-            Image(systemName: "square.and.pencil")
-                .resizable()
-                .frame(width: 30, height: 30)
-//                .foregroundColor(.primary)
+//            Image(systemName: "square.and.pencil")
+//                .resizable()
+//                .frame(width: 30, height: 30)
+////                .foregroundColor(.primary)
+            HStack {
+                Image(systemName: "square.and.pencil")
+                    .resizable()
+                    .frame(width: 22, height: 22)
+                Text("Edit Profile")
+                    .foregroundStyle(Color.primary)
+                Spacer()
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(10)
         }
         .sheet(isPresented: $isEditSuccessful) {
             Profile_Edit()
@@ -288,20 +300,22 @@ struct ProfileButtonsView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: AnnouncementsView()) {
-                HStack {
-                    Image(systemName: "doc.fill")
-                        .resizable()
-                        .frame(width: 18, height: 20)
-                    Text("Announcements")
-                        .bold()
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                }
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-            }
+//            NavigationLink(destination: AnnouncementsView()) {
+//                HStack {
+//                    Image(systemName: "doc.fill")
+//                        .resizable()
+//                        .frame(width: 18, height: 20)
+//                        .padding()
+//                        .background(Color(uiColor: .tertiarySystemBackground))
+//                    Text("Announcements")
+//                        .bold()
+//                    Spacer()
+//                    Image(systemName: "chevron.right")
+//                }
+//                .padding()
+//                .background(Color(.secondarySystemBackground))
+//                .cornerRadius(10)
+//            }
             Button(action: {
                 viewModel.signOut() // Call the logout function
             }) {
@@ -314,7 +328,7 @@ struct ProfileButtonsView: View {
                     Spacer()
                 }
                 .padding()
-                .background(Color(.systemGray6))
+                .background(Color(.secondarySystemBackground))
                 .cornerRadius(10)
             }
         }
