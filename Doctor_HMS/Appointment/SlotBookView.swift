@@ -46,7 +46,7 @@ struct TimeButton: View {
 }
 
 struct SlotBookView: View {
-    let doctor: DoctorModel
+ //   let doctor: DoctorModel
     let times = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"]
     @State private var showConfirmationAlert = false
     
@@ -99,7 +99,7 @@ struct SlotBookView: View {
             }
             Button("Book Appointment") {
                 if let selectedSlot = selectedSlot {
-                    createBooking(doctor: doctor, date: selectedDate, slot: selectedSlot)
+                    createBooking( date: selectedDate, slot: selectedSlot)
                     showConfirmationAlert = true
                 }
             }
@@ -111,7 +111,6 @@ struct SlotBookView: View {
             .alert(isPresented: $showConfirmationAlert) {
                           Alert(
                               title: Text("Appointment Confirmed"),
-                              message: Text("Your appointment with \(doctor.fullName) on \(selectedDate) has been booked."),
                               dismissButton: .default(Text("OK"))
                           )
                       }
@@ -141,7 +140,7 @@ struct SlotBookView: View {
             }
     }
     
-    func createBooking(doctor: DoctorModel, date: Date, slot: String) {
+    func createBooking( date: Date, slot: String) {
         let db = Firestore.firestore()
         
         let appointmentData: [String: Any] = [
@@ -164,31 +163,33 @@ struct SlotBookView: View {
 }
 
 
-struct SlotBookView_Previews: PreviewProvider {
-    static var previews: SlotBookView {
-        let dummyDoctor = DoctorModel(
-            id: "1",
-            fullName: "Dr. Jane Doe",
-            descript: "Expert in cardiology",
-            gender: "Female",
-            mobileno: "1234567890",
-            experience: "10 years",
-            qualification: "MD, Cardiology",
-            dob: Date(timeIntervalSince1970: 0),
-            address: "123 Main St, Springfield",
-            pincode: "123456",
-            department: "Cardiology",
-            speciality: "Cardiologist",
-            cabinNo: "101",
-            profilephoto: nil
-        )
-        
-        return SlotBookView(doctor: dummyDoctor)
-    }
+//struct SlotBookView_Previews: PreviewProvider {
+//    static var previews: SlotBookView {
+//        let dummyDoctor = DoctorModel(
+//            id: "1",
+//            fullName: "Dr. Jane Doe",
+//            descript: "Expert in cardiology",
+//            gender: "Female",
+//            mobileno: "1234567890",
+//            experience: "10 years",
+//            qualification: "MD, Cardiology",
+//            dob: Date(timeIntervalSince1970: 0),
+//            address: "123 Main St, Springfield",
+//            pincode: "123456",
+//            department: "Cardiology",
+//            speciality: "Cardiologist",
+//            cabinNo: "101",
+//            profilephoto: nil
+//        )
+//        
+//        return SlotBookView(doctor: dummyDoctor)
+//    }
+//}
+
+
+#Preview {
+    SlotBookView()
 }
-
-
-
 
 
 

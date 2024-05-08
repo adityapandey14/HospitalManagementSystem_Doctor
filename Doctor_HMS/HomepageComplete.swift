@@ -46,7 +46,7 @@ struct HomepageComplete: View {
                         .padding(.top)
                 }
             
-            SlotBookView(doctor: dummyDoctor)
+            SlotBookView()
                 .tabItem {
                     Label("slot", systemImage: "person.fill")
                         .padding(.top)

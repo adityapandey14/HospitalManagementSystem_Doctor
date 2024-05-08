@@ -115,7 +115,7 @@ struct Homepage: View {
                 // Appointment list for the selected date
                 ScrollView {
                     LazyVStack(spacing: 20) {
-                        ForEach(appointViewModel.appointments.filter { $0.doctorID == currentUserId && $0.date == selectedDate.formatted(date: .numeric, time: .omitted)}) { appointment in
+                        ForEach(appointViewModel.appointments.filter {( $0.doctorID == currentUserId && $0.date == selectedDate.formatted(date: .numeric, time: .omitted) && !($0.patientID == Auth.auth().currentUser?.uid)  )}) { appointment in
                             HStack(alignment: .top) {
                                 Text(appointment.timeSlot)
                                     .padding()
