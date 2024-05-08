@@ -332,9 +332,14 @@ struct PatientAndAppoinmentDetails: View {
                                 Text("Time Slot: \(appointment.timeSlot)")
                                     .font(.system(size: 18))
                                     
-                                Text("Status: \(appointment.isComplete ? "Completed" : "Pending")")
-                                    .font(.system(size: 18))
-                                    .foregroundColor(appointment.isComplete ? .green : .orange)
+                                if appointment.isComplete {
+                                    Text("Status: Complete")
+                                    
+                                        .foregroundColor(.green)
+                                } else {
+                                    Text("Status: Pending")
+                                        .foregroundColor(.orange)
+                                }
                                 
                             // Accept appoint or delete appointment button
                                 HStack {
