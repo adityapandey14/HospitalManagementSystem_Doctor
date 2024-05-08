@@ -46,7 +46,7 @@ struct TimeButton: View {
 }
 
 struct SlotBookView: View {
-    let doctor: DoctorModel
+ //   let doctor: DoctorModel
     let times = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"]
     @State private var showConfirmationAlert = false
     
@@ -92,17 +92,6 @@ struct SlotBookView: View {
             
             ZStack {
                 
-//                if text.isEmpty {
-//                    Text(placeholder)
-//                        .foregroundStyle(Color.black)
-//                        .padding(.horizontal)
-//                        .padding(.vertical)
-//                }
-//                TextField(text : $text)
-//                    .frame(minWidth: 0, maxWidth: 360, minHeight: 0, maxHeight: 120)
-//                    .border(Color.myGray, width: 1)
-//                    .padding()
-                
                 TextField("Consultation reason", text: $text)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
@@ -110,7 +99,7 @@ struct SlotBookView: View {
             }
             Button("Book Appointment") {
                 if let selectedSlot = selectedSlot {
-                    createBooking(doctor: doctor, date: selectedDate, slot: selectedSlot)
+                    createBooking( date: selectedDate, slot: selectedSlot)
                     showConfirmationAlert = true
                 }
             }
@@ -122,7 +111,6 @@ struct SlotBookView: View {
             .alert(isPresented: $showConfirmationAlert) {
                           Alert(
                               title: Text("Appointment Confirmed"),
-                              message: Text("Your appointment with \(doctor.fullName) on \(selectedDate) has been booked."),
                               dismissButton: .default(Text("OK"))
                           )
                       }
@@ -138,7 +126,7 @@ struct SlotBookView: View {
         let formattedDate = selectedDate.formatted(date: .numeric, time: .omitted)
         
         db.collection("appointments")
-            .whereField("DoctorID", isEqualTo: doctor.id)
+            .whereField("DoctorID", isEqualTo: Auth.auth().currentUser?.uid)
             .whereField("Date", isEqualTo: formattedDate)
             .getDocuments { querySnapshot, error in
                 if let error = error {
@@ -152,13 +140,13 @@ struct SlotBookView: View {
             }
     }
     
-    func createBooking(doctor: DoctorModel, date: Date, slot: String) {
+    func createBooking( date: Date, slot: String) {
         let db = Firestore.firestore()
         
         let appointmentData: [String: Any] = [
             "Date": date.formatted(date: .numeric, time: .omitted),
-            "DoctorID": doctor.id,
-            "PatientID": Auth.auth().currentUser?.uid ?? "",
+            "DoctorID": Auth.auth().currentUser?.uid,
+            "PatientID": Auth.auth().currentUser?.uid,
             "TimeSlot": slot,
             "isComplete": false,
             "reason": "Consultation"
@@ -175,27 +163,32 @@ struct SlotBookView: View {
 }
 
 
-struct SlotBookView_Previews: PreviewProvider {
-    static var previews: SlotBookView {
-        let dummyDoctor = DoctorModel(
-            id: "1",
-            fullName: "Dr. Jane Doe",
-            descript: "Expert in cardiology",
-            gender: "Female",
-            mobileno: "1234567890",
-            experience: "10 years",
-            qualification: "MD, Cardiology",
-            dob: Date(timeIntervalSince1970: 0),
-            address: "123 Main St, Springfield",
-            pincode: "123456",
-            department: "Cardiology",
-            speciality: "Cardiologist",
-            cabinNo: "101",
-            profilephoto: nil
-        )
-        
-        return SlotBookView(doctor: dummyDoctor)
-    }
+//struct SlotBookView_Previews: PreviewProvider {
+//    static var previews: SlotBookView {
+//        let dummyDoctor = DoctorModel(
+//            id: "1",
+//            fullName: "Dr. Jane Doe",
+//            descript: "Expert in cardiology",
+//            gender: "Female",
+//            mobileno: "1234567890",
+//            experience: "10 years",
+//            qualification: "MD, Cardiology",
+//            dob: Date(timeIntervalSince1970: 0),
+//            address: "123 Main St, Springfield",
+//            pincode: "123456",
+//            department: "Cardiology",
+//            speciality: "Cardiologist",
+//            cabinNo: "101",
+//            profilephoto: nil
+//        )
+//        
+//        return SlotBookView(doctor: dummyDoctor)
+//    }
+//}
+
+
+#Preview {
+    SlotBookView()
 }
 
 
@@ -206,44 +199,3 @@ struct SlotBookView_Previews: PreviewProvider {
 
 
 
-
-
-
-//            ZStack {
-//                RoundedRectangle(cornerRadius: 28)
-//                    .fill(LinearGradient(
-//                        gradient: Gradient(colors: [Color.blue.opacity(1), Color.blue.opacity(0.5)]),
-//                        startPoint: .leading,
-//                        endPoint: .trailing))
-//                    .frame(width: 361, height: 180)
-//                    .shadow(color: Color.black.opacity(0.15), radius: 20)
-//
-//                HStack {
-//                    VStack(alignment: .leading, spacing: 10) {
-//                        Text(doctor.name)
-//                            .font(.title.bold())
-//                            .foregroundColor(.white)
-//                            .frame(maxWidth: .infinity, alignment: .leading)
-//                            .padding()
-//                            .frame(alignment: .top)
-//
-//                        Text(doctor.specialisation)
-//                            .font(.callout)
-//                            .foregroundColor(.white)
-//
-//                        Text(doctor.degree)
-//                            .font(.body)
-//                            .foregroundColor(.white)
-//                        Text("Experience: \(doctor.experience) years")
-//                            .font(.body)
-//                            .foregroundColor(.white)
-//                    }
-//                    Image(systemName: "person.circle.fill")
-//                        .foregroundColor(.white)
-//                        .font(.system(size: 60))
-//                        .padding(.trailing, 10)
-//                }
-//                .padding(.leading, 30)
-//                Spacer()
-//            }
-//            .frame(width: 380, height: 200)

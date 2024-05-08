@@ -46,6 +46,12 @@ struct HomepageComplete: View {
                         .padding(.top)
                 }
             
+            SlotBookView()
+                .tabItem {
+                    Label("slot", systemImage: "person.fill")
+                        .padding(.top)
+                }
+            
         }
     }
 }
