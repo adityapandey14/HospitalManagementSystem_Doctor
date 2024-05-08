@@ -324,9 +324,6 @@ struct PatientAndAppoinmentDetails: View {
                                     .font(.system(size: 17))
                                     .opacity(0.8)
                                 Spacer()
-                            }
-                            VStack(alignment: .leading) {
-                                
                                 if appointment.isComplete {
                                     Text("Completed")
                                         .font(.caption2)
@@ -345,34 +342,40 @@ struct PatientAndAppoinmentDetails: View {
                                         .cornerRadius(50)
 
                                 }
-                                
+                            }
+                            .padding(.top)
+                            VStack(alignment: .leading) {
                                 Text("Reason for visit: \(appointment.reason)")
                                     .font(.system(size: 18))
                                 
                                 Text("Time Slot: \(appointment.timeSlot)")
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 17))
                                     
                                 
                                 
                             // Accept appoint or delete appointment button
-                                HStack {
+                                VStack {
                                     Button{
                                         appointmentviewmodel.deleteAppointment(appointmentId: appointment.id)
                                         
                                     } label : {
-                                        Text("Delete")
-                                            .foregroundStyle(Color.red)
+                                        Text("Delete Appointment")
+                                            .foregroundStyle(Color(uiColor: .systemRed))
                                     }
                                     
-                                    Spacer()
+//                                    Spacer()
                                     
                                     
-                                    Button{
-                                        appointmentviewmodel.markAppointmentAsComplete(appointmentId: appointment.id)
-                                      
-                                    } label : {
-                                        Text("Completed")
+                                    if (!appointment.isComplete){
+                                        Button{
+                                            appointmentviewmodel.markAppointmentAsComplete(appointmentId: appointment.id)
+                                          
+                                        } label : {
+                                            Text("Mark as Completed")
+                                        }
                                     }
+                                    
+                                    
                                 }
                                 
                             }
@@ -420,10 +423,10 @@ struct PatientAndAppoinmentDetails: View {
                                         }
                                     }
                                 }
-                                .listRowBackground(Color.white)
+                                .listRowBackground(Color(uiColor: .secondarySystemBackground))
                             }
                             
-                            .background(Color.clear)
+                            .background(Color(uiColor: .systemBackground))
                         }
                         .scrollContentBackground(.hidden)
                         .onAppear {
