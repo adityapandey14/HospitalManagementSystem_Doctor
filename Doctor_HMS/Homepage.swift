@@ -45,33 +45,26 @@ struct Homepage: View {
             VStack {
                 // Profile image bar.
                 HStack {
-                    HStack {
-                        if let posterURL = profileViewModel.currentProfile.profilephoto {
-                            AsyncImage(url: URL(string: posterURL)) { phase in
-                                switch phase {
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 60, height: 60)
-                                            .cornerRadius(10.0)
-                                            .clipShape(Circle())
-                                            .padding([.leading, .bottom, .trailing])
-                                    default:
-                                            ProgressView()
-                                                .frame(width: 50, height: 50)
-                                                .padding([.leading, .bottom, .trailing])
-                                            }
-                            }
-                    } else {
-                            Image(uiImage: UIImage(named: "default_hackathon_poster")!)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 60, height: 60)
-                                .cornerRadius(10.0)
-                                .clipShape(Circle())
-                                .padding([.leading, .bottom, .trailing])
+                    if let posterURL = profileViewModel.currentProfile.profilephoto {
+                        AsyncImage(url: URL(string: posterURL)) { phase in
+                            switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 60, height: 60)
+                                        .clipShape(Circle())
+                                default:
+                                        ProgressView()
+                                            .frame(width: 50, height: 50)
+                                        }
                         }
+                } else {
+                        Image(uiImage: UIImage(named: "profilePictureDefault")!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 60, height: 60)
+                            .clipShape(Circle())
                     }
                     Spacer()
                     Text(currentDateMonth)
@@ -102,7 +95,7 @@ struct Homepage: View {
                             .font(.system(size: 22))
                             .foregroundColor(Color("paleBlue"))
                     }
-                    .padding(.top, 40)
+                    .padding(.top, 20)
                     Spacer()
                 }
                 .padding(.horizontal, 25)
@@ -201,24 +194,27 @@ struct AppointmentCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            if let patient = patientViewModel.patientDetails.first(where: { $0.id == appointment.patientID }) {
-                HStack{
-                    Text(patient.fullName)
-                        .font(.system(size: 18))
-                    Spacer()
-                }
-                Text(String(calculateAge(from: patient.dob!)))
-                    .font(.system(size: 14))
-                    .foregroundStyle(Color(uiColor: .secondaryLabel))
-
-            } else {
-                Text("Loading...")
-                    .font(.system(size: 18))
-                    .onAppear {
-                        Task {
-                            await patientViewModel.fetchPatientDetailsByID(patientID: appointment.patientID)
-                        }
+            VStack (alignment: .leading, spacing: 3){
+                if let patient = patientViewModel.patientDetails.first(where: { $0.id == appointment.patientID }) {
+                    HStack{
+                        Text(patient.fullName)
+                            .font(.system(size: 18))
+                        Spacer()
                     }
+                    
+                    Text("Age: \(calculateAge(from: patient.dob!))")
+                        .font(.system(size: 14))
+                        .foregroundStyle(Color(uiColor: .secondaryLabel))
+
+                } else {
+                    Text("Loading...")
+                        .font(.system(size: 18))
+                        .onAppear {
+                            Task {
+                                await patientViewModel.fetchPatientDetailsByID(patientID: appointment.patientID)
+                            }
+                        }
+                }
             }
             Text(appointment.reason)
                 .font(.system(size: 14))
