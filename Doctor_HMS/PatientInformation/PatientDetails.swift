@@ -147,6 +147,7 @@ let dummyAppointment = AppointmentModel(
 struct PatientAndAppoinmentDetails: View {
     let patient: PatientModel
     let appointment: AppointmentModel
+    @ObservedObject var appointmentviewmodel = AppointmentViewModel()
     @StateObject var patientViewModel = PatientViewModel.shared
     @EnvironmentObject var AuthviewModel:AuthViewModel
     @State private var healthRecordPDFData: Data? = nil
@@ -164,6 +165,7 @@ struct PatientAndAppoinmentDetails: View {
     @State private var selectedPatient: String = ""
     @State private var medicines: [MedicineInput] = [MedicineInput()]
     @State private var instructions: String = ""
+   
 
 
     
@@ -206,17 +208,38 @@ struct PatientAndAppoinmentDetails: View {
                     Spacer()
                     //call and email
                     HStack(spacing: 15) {
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                            Image(systemName: "phone")
-                                .tint(Color("paleBlue"))
-                                .font(.system(size: 23))
-                        })
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                            Image(systemName: "envelope")
-                                .tint(Color("paleBlue"))
-                                .font(.system(size: 23))
-                        })
+                        Button(action: {
+                                   // Replace with a valid phone number
+                            let phoneNumber = patient.mobileno
+                                   if let url = URL(string: "tel://\(phoneNumber)"), UIApplication.shared.canOpenURL(url) {
+                                       UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                   } else {
+                                       print("Unable to open URL")
+                                   }
+                               }) {
+                                   Image(systemName: "phone")
+                                       .tint(Color("paleBlue"))
+                                        .font(.system(size: 23))
+                               } // End of Button
                         
+                        
+//--------------------------------iMessage ----------------------------//
+                        Button(action: {
+                                    // Define the phone number to open in iMessage
+                                    let phoneNumber = patient.mobileno
+                                    
+                                    // Construct the URL with the 'sms:' scheme
+                                    if let url = URL(string: "sms:\(phoneNumber)"), UIApplication.shared.canOpenURL(url) {
+                                        // Open iMessage with the specified phone number
+                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                    } else {
+                                        print("Unable to open iMessage")
+                                    }
+                                }) {
+                                    Image(systemName: "envelope")
+                                        .tint(Color("paleBlue"))
+                                         .font(.system(size: 23))
+                                }
                         
                     }
                 }
@@ -312,6 +335,27 @@ struct PatientAndAppoinmentDetails: View {
                                 Text("Status: \(appointment.isComplete ? "Completed" : "Pending")")
                                     .font(.system(size: 18))
                                     .foregroundColor(appointment.isComplete ? .green : .orange)
+                                
+                            // Accept appoint or delete appointment button
+                                HStack {
+                                    Button{
+                                        appointmentviewmodel.deleteAppointment(appointmentId: appointment.id)
+                                        
+                                    } label : {
+                                        Text("Delete")
+                                            .foregroundStyle(Color.red)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    
+                                    Button{
+                                        appointmentviewmodel.markAppointmentAsComplete(appointmentId: appointment.id)
+                                      
+                                    } label : {
+                                        Text("Completed")
+                                    }
+                                } //end of HStack
                                 
                             }
                         }

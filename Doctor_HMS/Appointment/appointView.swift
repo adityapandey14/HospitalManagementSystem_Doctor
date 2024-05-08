@@ -143,10 +143,10 @@ struct AppointmentListView: View {
 
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             
           
-            List {
+            VStack {
                 DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
                     .datePickerStyle(CompactDatePickerStyle())
                     .padding()
@@ -169,24 +169,25 @@ struct AppointmentListView: View {
                             Text("Status: Incomplete")
                                 .foregroundColor(.red)
                         }
-//                        HStack {
-//                            Button{
-//                                viewModel.deleteAppointment(appointmentId: appointment.id)
-//                                
-//                            } label : {
-//                                Text("Delete")
-//                            }
-//                            
-//                            Spacer()
-//                            
-//                            
-//                            Button{
-//                               viewModel.markAppointmentAsComplete(appointmentId: appointment.id)
-//                              
-//                            } label : {
-//                                Text("completed")
-//                            }
-//                        }
+                        HStack {
+                            Button{
+                                viewModel.deleteAppointment(appointmentId: appointment.id)
+                                
+                            } label : {
+                                Text("Delete")
+                            }
+                            
+                            Spacer()
+                            
+                            
+                            Button{
+                               viewModel.markAppointmentAsComplete(appointmentId: appointment.id)
+                              
+                            } label : {
+                                Text("completed")
+                            }
+                        } //end of HStack
+                        
                     }
                     .padding()
                 }

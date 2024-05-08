@@ -100,8 +100,9 @@ struct Homepage: View {
                             HStack(alignment: .top) {
                                 Text(appointment.timeSlot)
                                     .padding()
+                                Spacer()
                                 AppointmentCard(appointment: appointment)
-                            }
+                            } //End of Horizontal Stack
                         }
                     }
                 }
