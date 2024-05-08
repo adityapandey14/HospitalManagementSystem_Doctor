@@ -191,12 +191,15 @@ struct AppointmentCard: View {
     let appointment: AppointmentModel
     @StateObject var patientViewModel = PatientViewModel.shared
     @State private var patientName: String = "Unknown"
+    @State var isLoading = false
+
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            VStack (alignment: .leading, spacing: 3){
+
+            VStack (alignment: .leading, spacing: 3) {
                 if let patient = patientViewModel.patientDetails.first(where: { $0.id == appointment.patientID }) {
-                    HStack{
+                    HStack {
                         Text(patient.fullName)
                             .font(.system(size: 18))
                         Spacer()
@@ -205,17 +208,33 @@ struct AppointmentCard: View {
                     Text("Age: \(calculateAge(from: patient.dob!))")
                         .font(.system(size: 14))
                         .foregroundStyle(Color(uiColor: .secondaryLabel))
-
-                } else {
-                    Text("Loading...")
-                        .font(.system(size: 18))
-                        .onAppear {
-                            Task {
-                                await patientViewModel.fetchPatientDetailsByID(patientID: appointment.patientID)
-                            }
+                } else if isLoading {
+                    VStack {
+                        HStack {
+                            Text("Loading...")
+                                .font(.system(size: 18))
+                            Spacer()
                         }
+                        
+                        Text("Loading...")
+                            .font(.system(size: 14))
+                            .foregroundStyle(Color(uiColor: .secondaryLabel))
+                    }
+                } else {
+                    // Display nothing if not loading and patient data is not available
+                    EmptyView()
                 }
             }
+            .onAppear {
+                if patientViewModel.patientDetails.first(where: { $0.id == appointment.patientID }) == nil {
+                    isLoading = true
+                    Task {
+                        await patientViewModel.fetchPatientDetailsByID(patientID: appointment.patientID)
+                        isLoading = false
+                    }
+                }
+            }
+
             Text(appointment.reason)
                 .font(.system(size: 14))
                 .foregroundStyle(Color(uiColor: .secondaryLabel))
@@ -232,6 +251,7 @@ struct AppointmentCard: View {
         .padding(.bottom, 4)
         .background(Color(uiColor: .secondarySystemBackground))
         .cornerRadius(20)
+        .frame(width: 250)
     }
     
     func calculateAge(from dob: Date) -> String {

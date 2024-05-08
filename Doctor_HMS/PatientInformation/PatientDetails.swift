@@ -209,7 +209,7 @@ struct PatientAndAppoinmentDetails: View {
                     //call and email
                     HStack(spacing: 15) {
                         Button(action: {
-                                   // Replace with a valid phone number
+                            //phone number
                             let phoneNumber = patient.mobileno
                                    if let url = URL(string: "tel://\(phoneNumber)"), UIApplication.shared.canOpenURL(url) {
                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -225,21 +225,21 @@ struct PatientAndAppoinmentDetails: View {
                         
 //--------------------------------iMessage ----------------------------//
                         Button(action: {
-                                    // Define the phone number to open in iMessage
-                                    let phoneNumber = patient.mobileno
-                                    
-                                    // Construct the URL with the 'sms:' scheme
-                                    if let url = URL(string: "sms:\(phoneNumber)"), UIApplication.shared.canOpenURL(url) {
-                                        // Open iMessage with the specified phone number
-                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                                    } else {
-                                        print("Unable to open iMessage")
-                                    }
-                                }) {
-                                    Image(systemName: "envelope")
-                                        .tint(Color("paleBlue"))
-                                         .font(.system(size: 23))
-                                }
+                            // Define the phone number to open in iMessage
+                            let phoneNumber = patient.mobileno
+                            
+                            // Construct the URL with the 'sms:' scheme
+                            if let url = URL(string: "sms:\(phoneNumber)"), UIApplication.shared.canOpenURL(url) {
+                                // Open iMessage with the specified phone number
+                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                            } else {
+                                print("Unable to open iMessage")
+                            }
+                        }) {
+                            Image(systemName: "envelope")
+                                .tint(Color("paleBlue"))
+                                .font(.system(size: 23))
+                        }
                         
                     }
                 }
@@ -326,20 +326,33 @@ struct PatientAndAppoinmentDetails: View {
                                 Spacer()
                             }
                             VStack(alignment: .leading) {
-                                Text(appointment.reason)
+                                
+                                if appointment.isComplete {
+                                    Text("Completed")
+                                        .font(.caption2)
+                                        .padding(.vertical, 5)
+                                        .padding(.horizontal, 15)
+                                        .background(Color(uiColor: .systemGreen))
+                                        .opacity(0.8)
+                                        .cornerRadius(50)
+                                } else {
+                                    Text("Pending")
+                                        .font(.caption2)
+                                        .padding(.vertical, 5)
+                                        .padding(.horizontal, 15)
+                                        .background(Color(uiColor: .systemOrange))
+                                        .opacity(0.8)
+                                        .cornerRadius(50)
+
+                                }
+                                
+                                Text("Reason for visit: \(appointment.reason)")
                                     .font(.system(size: 18))
                                 
                                 Text("Time Slot: \(appointment.timeSlot)")
                                     .font(.system(size: 18))
                                     
-                                if appointment.isComplete {
-                                    Text("Status: Complete")
-                                    
-                                        .foregroundColor(.green)
-                                } else {
-                                    Text("Status: Pending")
-                                        .foregroundColor(.orange)
-                                }
+                                
                                 
                             // Accept appoint or delete appointment button
                                 HStack {
@@ -360,7 +373,7 @@ struct PatientAndAppoinmentDetails: View {
                                     } label : {
                                         Text("Completed")
                                     }
-                                } //end of HStack
+                                }
                                 
                             }
                         }

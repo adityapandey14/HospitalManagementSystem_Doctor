@@ -21,23 +21,25 @@ struct HomepageComplete: View {
 //                    Label("Appointment", systemImage: "person.crop.rectangle.fill")
 //                        .padding(.top)
 //                }
-            AddPrescriptionView()
-                .tabItem {
-                    Label("Prescription", systemImage: "stethoscope")
-                        .padding(.top)
-                }
             
-            appointView()
-                .tabItem {
-                    Label("appointView", systemImage: "folder.fill")
-                        .padding(.top)
-                }
+//            AddPrescriptionView()
+//                .tabItem {
+//                    Label("Prescription", systemImage: "stethoscope")
+//                        .padding(.top)
+//                }
+            
+//            appointView()
+//                .tabItem {
+//                    Label("appointView", systemImage: "folder.fill")
+//                        .padding(.top)
+//                }
 //
-            Profile_Edit()
-                .tabItem {
-                    Label("ProfileEdit", systemImage: "folder.fill")
-                        .padding(.top)
-                }
+//            Profile_Edit()
+//                .tabItem {
+//                    Label("ProfileEdit", systemImage: "folder.fill")
+//                        .padding(.top)
+//                }
+            
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
