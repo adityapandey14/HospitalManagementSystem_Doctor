@@ -92,17 +92,6 @@ struct SlotBookView: View {
             
             ZStack {
                 
-//                if text.isEmpty {
-//                    Text(placeholder)
-//                        .foregroundStyle(Color.black)
-//                        .padding(.horizontal)
-//                        .padding(.vertical)
-//                }
-//                TextField(text : $text)
-//                    .frame(minWidth: 0, maxWidth: 360, minHeight: 0, maxHeight: 120)
-//                    .border(Color.myGray, width: 1)
-//                    .padding()
-                
                 TextField("Consultation reason", text: $text)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
@@ -138,7 +127,7 @@ struct SlotBookView: View {
         let formattedDate = selectedDate.formatted(date: .numeric, time: .omitted)
         
         db.collection("appointments")
-            .whereField("DoctorID", isEqualTo: doctor.id)
+            .whereField("DoctorID", isEqualTo: Auth.auth().currentUser?.uid)
             .whereField("Date", isEqualTo: formattedDate)
             .getDocuments { querySnapshot, error in
                 if let error = error {
@@ -157,8 +146,8 @@ struct SlotBookView: View {
         
         let appointmentData: [String: Any] = [
             "Date": date.formatted(date: .numeric, time: .omitted),
-            "DoctorID": doctor.id,
-            "PatientID": Auth.auth().currentUser?.uid ?? "",
+            "DoctorID": Auth.auth().currentUser?.uid,
+            "PatientID": Auth.auth().currentUser?.uid,
             "TimeSlot": slot,
             "isComplete": false,
             "reason": "Consultation"
@@ -209,41 +198,3 @@ struct SlotBookView_Previews: PreviewProvider {
 
 
 
-//            ZStack {
-//                RoundedRectangle(cornerRadius: 28)
-//                    .fill(LinearGradient(
-//                        gradient: Gradient(colors: [Color.blue.opacity(1), Color.blue.opacity(0.5)]),
-//                        startPoint: .leading,
-//                        endPoint: .trailing))
-//                    .frame(width: 361, height: 180)
-//                    .shadow(color: Color.black.opacity(0.15), radius: 20)
-//
-//                HStack {
-//                    VStack(alignment: .leading, spacing: 10) {
-//                        Text(doctor.name)
-//                            .font(.title.bold())
-//                            .foregroundColor(.white)
-//                            .frame(maxWidth: .infinity, alignment: .leading)
-//                            .padding()
-//                            .frame(alignment: .top)
-//
-//                        Text(doctor.specialisation)
-//                            .font(.callout)
-//                            .foregroundColor(.white)
-//
-//                        Text(doctor.degree)
-//                            .font(.body)
-//                            .foregroundColor(.white)
-//                        Text("Experience: \(doctor.experience) years")
-//                            .font(.body)
-//                            .foregroundColor(.white)
-//                    }
-//                    Image(systemName: "person.circle.fill")
-//                        .foregroundColor(.white)
-//                        .font(.system(size: 60))
-//                        .padding(.trailing, 10)
-//                }
-//                .padding(.leading, 30)
-//                Spacer()
-//            }
-//            .frame(width: 380, height: 200)
