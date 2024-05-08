@@ -16,6 +16,7 @@
 		4762BFC22BE8A1B600845B96 /* Prescription_Viewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4762BFC12BE8A1B600845B96 /* Prescription_Viewmodel.swift */; };
 		4762BFC42BE8A1FD00845B96 /* Presc_Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4762BFC32BE8A1FD00845B96 /* Presc_Input.swift */; };
 		4762BFEA2BEA37C100845B96 /* AnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4762BFE92BEA37C100845B96 /* AnnouncementView.swift */; };
+		488069C72BEB7A2000AA83B4 /* SlotBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488069C62BEB7A2000AA83B4 /* SlotBookView.swift */; };
 		48806FFC2BE4B760006CF917 /* appointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48806FFB2BE4B75F006CF917 /* appointView.swift */; };
 		4890D4272BE0D91500EF8750 /* HomepageComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4262BE0D91500EF8750 /* HomepageComplete.swift */; };
 		4890D42A2BE0D96E00EF8750 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890D4292BE0D96E00EF8750 /* ProfilePage.swift */; };
@@ -81,6 +82,7 @@
 		4762BFC12BE8A1B600845B96 /* Prescription_Viewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prescription_Viewmodel.swift; sourceTree = "<group>"; };
 		4762BFC32BE8A1FD00845B96 /* Presc_Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presc_Input.swift; sourceTree = "<group>"; };
 		4762BFE92BEA37C100845B96 /* AnnouncementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementView.swift; sourceTree = "<group>"; };
+		488069C62BEB7A2000AA83B4 /* SlotBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotBookView.swift; sourceTree = "<group>"; };
 		48806FFB2BE4B75F006CF917 /* appointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appointView.swift; sourceTree = "<group>"; };
 		4890D4262BE0D91500EF8750 /* HomepageComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageComplete.swift; sourceTree = "<group>"; };
 		4890D4292BE0D96E00EF8750 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				48806FFB2BE4B75F006CF917 /* appointView.swift */,
+				488069C62BEB7A2000AA83B4 /* SlotBookView.swift */,
 			);
 			path = Appointment;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				DF6B2ED12BD59B7700FAD930 /* ProfileInputView.swift in Sources */,
 				13719FEE2BE4BBDA0059ED22 /* ManageAvailabilityView.swift in Sources */,
 				DF6B2ECB2BD597E200FAD930 /* AuthViewModel.swift in Sources */,
+				488069C72BEB7A2000AA83B4 /* SlotBookView.swift in Sources */,
 				DF6B2ECF2BD5998300FAD930 /* loginView.swift in Sources */,
 				4890D4362BE0DAD400EF8750 /* DoctorEdit.swift in Sources */,
 				139D722F2BE3F39F00300EEA /* appointmentModel.swift in Sources */,
