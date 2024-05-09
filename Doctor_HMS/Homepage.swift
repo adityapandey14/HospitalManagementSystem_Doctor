@@ -131,7 +131,7 @@ struct Homepage: View {
             .onAppear {
                 let date = Date()
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MMM, yyyy"
+                dateFormatter.dateFormat = "dd MMM, yyyy"
                 currentDateMonth = dateFormatter.string(from: date)
                 getDaysOfWeek()
                 appointViewModel.fetchAppointments() // Fetch appointments when the view appears
