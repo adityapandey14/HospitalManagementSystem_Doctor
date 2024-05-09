@@ -23,6 +23,7 @@ struct Homepage: View {
     @State var selectedDateIndex: Int = 0
     let currentUserId = Auth.auth().currentUser?.uid
     @ObservedObject var appointViewModel = AppointmentViewModel()
+    
 
     var selectedDate: Date {
         return Calendar.current.date(byAdding: .day, value: selectedDateIndex, to: todayDate)!
@@ -35,7 +36,7 @@ struct Homepage: View {
 //            }
 //            return false // Handle case where appointment date is nil
 //        }
-        let selectedDateAppointments = appointViewModel.appointments.filter { $0.doctorID == currentUserId && $0.date == selectedDate.formatted(date: .numeric, time: .omitted)}
+        let selectedDateAppointments = appointViewModel.appointments.filter { ($0.doctorID == currentUserId && $0.date == selectedDate.formatted(date: .numeric, time: .omitted)) && !($0.patientID == Auth.auth().currentUser?.uid) }
 
         return selectedDateAppointments.count
     }
@@ -131,7 +132,7 @@ struct Homepage: View {
             .onAppear {
                 let date = Date()
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MMM, yyyy"
+                dateFormatter.dateFormat = "dd MMM, yyyy"
                 currentDateMonth = dateFormatter.string(from: date)
                 getDaysOfWeek()
                 appointViewModel.fetchAppointments() // Fetch appointments when the view appears
