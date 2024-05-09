@@ -317,6 +317,7 @@ struct PatientAndAppoinmentDetails: View {
                             .background(Color(uiColor: .secondarySystemBackground))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
+                        .padding(.top)
                         
                         VStack (alignment: .leading, spacing: 10) {
                             HStack {
@@ -642,9 +643,9 @@ struct SearchBar: View {
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .padding()
+                .padding(6)
             TextField("Search", text: $searchText)
-                .padding()
+                .padding(6)
             Button(action: {
                 searchText = ""
             }) {
@@ -653,7 +654,7 @@ struct SearchBar: View {
 //                    .padding(.trailing, 10)
                 Text("Clear")
             }
-            .padding()
+            .padding(.horizontal)
         }
         .background(Color(uiColor: .secondarySystemBackground))
         .cornerRadius(10)
