@@ -193,7 +193,6 @@ struct PatientAndAppoinmentDetails: View {
                         .frame(height: 60)
                         .opacity(0.8)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("\(patient.id)")
                         Text("\(patient.fullName)")
                             .font(.system(size: 20))
                         HStack(spacing: 0) {
