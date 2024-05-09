@@ -38,7 +38,7 @@ struct TimeButton: View {
                     RoundedRectangle(cornerRadius: 15)
                         .stroke(isBooked ? Color.gray : Color.blue, lineWidth: 2)
                 )
-                .opacity(isBooked ? 0.5 : 1.0)
+                .opacity(isBooked ? 0.2 : 1.0)
                 .disabled(isBooked)  // Disable if booked
         }
         .frame(width: 90, height: 50)  // Set the size of the button
@@ -55,66 +55,103 @@ struct SlotBookView: View {
     @State private var selectedSlot: String? = nil
     @State private var text: String = ""
     
-    let placeholder: String = "Write your reason for consultation"
+    let placeholder: String = "Write your reason"
     
     var body: some View {
-        VStack {
-            DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
-                .padding()
-                .onChange(of: selectedDate) { _ in
-                    fetchBookedSlots()  // Fetch slots when date changes
+        NavigationStack {
+            ScrollView {
+                DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .padding(.horizontal)
+                    .tint(Color("paleBlue"))
+                    .onChange(of: selectedDate) { _ in
+                        fetchBookedSlots()  // Fetch slots when date changes
+                    }
+                
+                //            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                //                ForEach(times, id: \.self) { time in
+                //                    let isBooked = bookedSlots.contains(time)
+                //                    let isSelected = selectedSlot == time
+                //
+                //                    TimeButton(
+                //                        time: time,
+                //                        isBooked: isBooked,
+                //                        isSelected: isSelected,
+                //                        isSelectable: !isBooked
+                //                    ) {
+                //                        selectedSlot = time  // Set the selected slot
+                //                    }
+                //                }
+                //                .foregroundStyle(Color.black)
+                //            }
+                //            .padding(.bottom)
+                
+                HStack {
+                    Text("Chose the slot you are not free: ")
+                        .font(.subheadline)
+                    Spacer()
                 }
-            
-            Text("Available Slots")
-                .font(.headline)
-                .padding(.bottom, 30)
-            
-//            Divider()
-//                .padding(.bottom, 30)
-            
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                ForEach(times, id: \.self) { time in
-                    let isBooked = bookedSlots.contains(time)
-                    let isSelected = selectedSlot == time
-                    
-                    TimeButton(
-                        time: time,
-                        isBooked: isBooked,
-                        isSelected: isSelected,
-                        isSelectable: !isBooked
-                    ) {
-                        selectedSlot = time  // Set the selected slot
+                .padding()
+                
+                VStack {
+                    ForEach(times, id: \.self) { time in
+                        let isBooked = bookedSlots.contains(time)
+                        let isSelected = selectedSlot == time
+                        
+                        Button(action: {
+                            if !isBooked {
+                                selectedSlot = time  // Set the selected slot
+                            }
+                        }) {
+                            HStack {
+                                Text(time)
+                                    .font(.system(size: 20))
+                                Spacer()
+                                Image(systemName: isSelected ? "checkmark.square.fill" : "checkmark.square")
+                                    .foregroundColor(isSelected ? Color("paleBlue") : .gray)
+                                    .font(.system(size: 20))
+                            }
+                            .padding()
+                            .background(isSelected ? Color("paleBlue").opacity(0.2) : Color(uiColor: .systemBackground))
+                            .cornerRadius(10)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .disabled(isBooked)
                     }
                 }
-                .foregroundStyle(Color.black)
-            }
-            .padding(.bottom)
-            
-            ZStack {
+                .padding(.horizontal)
                 
-                TextField("Consultation reason", text: $text)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                    .frame(width: 390)
-            }
-            Button("Book Appointment") {
-                if let selectedSlot = selectedSlot {
-                    createBooking( date: selectedDate, slot: selectedSlot)
-                    showConfirmationAlert = true
+                
+                //            ZStack {
+                //                TextField("Consultation reason", text: $text)
+                //                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                //                    .padding()
+                //                    .frame(width: 390)
+                //            }
+                
+                Button("Reserve Busy Slots") {
+                    if let selectedSlot = selectedSlot {
+                        createBooking( date: selectedDate, slot: selectedSlot)
+                        showConfirmationAlert = true
+                    }
                 }
+                .padding()
+                
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .background(Color.paleBlue)
+                .cornerRadius(10)
+                .padding()
+                .disabled(selectedSlot == nil)  // Disable if no slot is selected
+                .alert(isPresented: $showConfirmationAlert) {
+                    Alert(
+                        title: Text("Slot Reserved "),
+                        dismissButton: .default(Text("Great!"))
+                    )
+                }
+                
             }
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .disabled(selectedSlot == nil)  // Disable if no slot is selected
-            .alert(isPresented: $showConfirmationAlert) {
-                          Alert(
-                              title: Text("Appointment Confirmed"),
-                              dismissButton: .default(Text("OK"))
-                          )
-                      }
-            
+            .navigationBarTitle("Manage Availability", displayMode: .inline)
         }
         .onAppear {
             fetchBookedSlots()  // Fetch initial data
@@ -149,7 +186,7 @@ struct SlotBookView: View {
             "PatientID": Auth.auth().currentUser?.uid,
             "TimeSlot": slot,
             "isComplete": false,
-            "reason": "Consultation"
+            "reason": "busy"
         ]
         
         db.collection("appointments").addDocument(data: appointmentData) { error in

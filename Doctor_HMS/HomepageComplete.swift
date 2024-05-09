@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct HomepageComplete: View {
+    
+    init() {
+        UITabBar.appearance().barTintColor = UIColor(named: "paleBlue")
+        UITabBar.appearance().tintColor = UIColor.white
+    }
+    
     var body: some View {
         TabView {
             Homepage()
                 .tabItem {
-                    Label("Home", systemImage: "house")
-                        .padding(.top)
+                    Image(systemName: "house.fill")
+                    Text("Home")
                 }
             
 //            Appointment()
@@ -40,19 +46,21 @@ struct HomepageComplete: View {
 //                        .padding(.top)
 //                }
             
-            ProfileView()
-                .tabItem {
-                    Label("Profile", systemImage: "person.fill")
-                        .padding(.top)
-                }
             
             SlotBookView()
                 .tabItem {
-                    Label("slot", systemImage: "person.fill")
-                        .padding(.top)
+                    Image(systemName: "clock.fill")
+                    Text("Reserve Slots")
+                }
+            
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.crop.circle.fill")
+                    Text("Profile")
                 }
             
         }
+        .accentColor(Color("paleBlue"))
     }
 }
 
