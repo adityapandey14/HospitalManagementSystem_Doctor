@@ -193,6 +193,7 @@ struct PatientAndAppoinmentDetails: View {
                         .frame(height: 60)
                         .opacity(0.8)
                     VStack(alignment: .leading, spacing: 2) {
+                        Text("\(patient.id)")
                         Text("\(patient.fullName)")
                             .font(.system(size: 20))
                         HStack(spacing: 0) {
@@ -479,14 +480,14 @@ struct PatientAndAppoinmentDetails: View {
                         
                         Button("Add Prescription")
                         {
-                            guard !selectedPatient.isEmpty && !medicines.isEmpty && !instructions.isEmpty else {
+                            guard !medicines.isEmpty && !instructions.isEmpty else {
                                 return
                             }
                             let medicineData = medicines.map { Medicine(name: $0.name, dosage: $0.dosage) }
                             PrescriptionViewModel.addPrescription(patientID: patient.id, medicines: medicineData, instructions: instructions)
                             
                             // Clear fields after adding prescription
-                            selectedPatient = ""
+                            
                             medicines = [MedicineInput()]
                             instructions = ""
                         }

@@ -12,6 +12,16 @@ struct AddPrescriptionView: View {
     @State private var selectedPatient: String = ""
     @State private var medicines: [MedicineInput] = [MedicineInput()]
     @State private var instructions: String = ""
+    @State private var searchText = ""
+    @State private var isSearching = false
+    var filteredPatients: [Patient] {
+        if searchText.isEmpty {
+            return viewModel.patients
+        } else {
+            return viewModel.patients.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+    
     
     var body: some View {
         VStack {
