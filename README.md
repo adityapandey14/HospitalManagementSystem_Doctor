@@ -1,4 +1,4 @@
-# MedNex Doctor App - README
+# MedNex Doctor App 
 
 Welcome to the **Doctor App**! This app is designed to help medical professionals manage their schedules, patient appointments, and medical records. It provides doctors with a comprehensive set of tools to streamline their workflows and improve patient care.
 
