@@ -383,20 +383,20 @@ struct PatientAndAppoinmentDetails: View {
                         }
                         .padding(.top)
                         
-                        VStack (spacing: 10){
-                            HStack {
-                                Text("Allergies")
-                                    .font(.system(size: 17))
-                                    .opacity(0.8)
-                                Spacer()
-                            }
-                            HStack {
-                                Text("Lorem, ipsum, peanuts.")
-                                    .font(.system(size: 18))
-                                Spacer()
-                            }
-                        }
-                        .padding(.top)
+//                        VStack (spacing: 10){
+//                            HStack {
+//                                Text("Allergies")
+//                                    .font(.system(size: 17))
+//                                    .opacity(0.8)
+//                                Spacer()
+//                            }
+//                            HStack {
+//                                Text("Lorem, ipsum, peanuts.")
+//                                    .font(.system(size: 18))
+//                                Spacer()
+//                            }
+//                        }
+//                        .padding(.top)
 
                     }
                     .padding(.top)
