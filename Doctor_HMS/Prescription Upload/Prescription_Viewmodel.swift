@@ -47,9 +47,16 @@ class PrescriptionViewModel: ObservableObject {
             // Add more prescription details as needed
         ]
         
-        // Set the document ID explicitly to patientID
-        db.collection("prescriptions").document(patientID).setData(prescriptionData)
+        // Omit setting the document ID
+        db.collection("prescriptions").addDocument(data: prescriptionData) { error in
+            if let error = error {
+                print("Error adding prescription: \(error)")
+            } else {
+                print("Prescription added successfully!")
+            }
+        }
     }
+
 
 
 
